@@ -1,0 +1,85 @@
+<!--
+  Copyright (c) 2023 IBM Corp.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+    <head>
+		<title>Jakarta Data Sample</title>
+		<script type="text/javascript" src="js/app.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+		<link rel="stylesheet" href="css/app.css">
+		<link rel="stylesheet" href="css/toast.css">
+    </head>
+    <body>
+        <section id="appIntro" >
+            <div id="titleSection">
+                <h1 id="appTitle">Jakarta Data Sample</h1>
+                <div class="line"></div>
+                <div class="headerImage"></div>
+                <h2>Congrats on your shiny, new Open Liberty sample app!</h2>
+                <p>This sample app uses REST endpoints and Bean Validation to store data using Jakarta Data</p>
+            </div>
+			<div id="usersContainer" class="hFlexContainer">
+				<div id="userCreation" class="vFlexContainer">
+					<strong id="createCrewMember" class="flexSelfCenter">Register Crew Member</strong>
+					<div id="Name" class="vFlexContainer inputLine">
+						<span>Name</span>
+						<input id="crewMemberName" class="textBox" type="text">
+					</div>
+					<div id="ID" class="vFlexContainer inputLine">
+						<span>ID Number</span>
+						<input id="crewMemberID" class="textBox" type="text">
+					</div>
+					<div id="Rank" class="vFlexContainer inputLine">
+						<span>Rank</span>
+						<select id="crewMemberRank">
+								<option>Captain</option>
+								<option>Officer</option>
+								<option>Engineer</option>
+						</select>
+					</div>
+					<button id="registerButton" class="buttons" onclick="addCrewMember()">Register Crew Member</button>
+				</div>
+				<div id="userDisplay" class="vFlexContainer">
+					<strong id="createCrewMember" class="flexSelfCenter">Crew Members</strong>
+					<div id="createCrewMember" class="flexSelfCenter">(click to remove)</div>
+					<div id="userBoxes" class="flexBox hFlexContainer">
+					</div>
+				</div>
+				<div id="docDisplay" class="flexBox vFlexContainer">
+						<strong id="createCrewMember" class="flexSelfCenter">Jakarta Data Information</strong>
+					<pre id="docText"></pre>
+				</div>
+			</div>
+        </section>
+    </body>
+
+    <footer class="bodyFooter">
+        <div class="bodyFooterLink">
+          <a id="licenseLink"href="https://github.com/OpenLiberty/open-liberty/blob/master/LICENSE">License</a>
+          <a href="https://twitter.com/OpenLibertyIO">Twitter</a>
+          <a href="https://github.com/OpenLiberty">GitHub</a>
+          <a href="https://openliberty.io/">openliberty.io</a>
+        </div>
+        <p id="footer_text">an IBM open source project</p>
+        <p id="footer_copyright">&copy;Copyright IBM Corp. 2019</p>
+	</footer>
+	
+	<div id="toast">
+</html>
+<script>
+refreshDocDisplay();
+</script>

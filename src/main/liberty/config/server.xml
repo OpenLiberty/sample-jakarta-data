@@ -1,0 +1,17 @@
+<server description="Sample Liberty server">
+	<featureManager>
+		<feature>beanValidation-3.0</feature>	   
+		<feature>mpConfig-3.0</feature>
+		<feature>passwordUtilities-1.0</feature>
+		<feature>restfulWS-3.1</feature>
+		<feature>cdi-4.0</feature>
+		<feature>jsonb-3.0</feature>
+	</featureManager>
+	
+	<httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
+
+	<webApplication location="JakartaDataSample.war" contextRoot="/"/>
+
+	<variable name="mongo.user" value="sampleUser"/>
+  	<variable name="mongo.pass.encoded" value="{aes}APtt+/vYxxPa0jE1rhmZue9wBm3JGqFK3JR4oJdSDGWM1wLr1ckvqkqKjSB2Voty8g=="/>
+</server>

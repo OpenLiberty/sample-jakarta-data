@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.openliberty.sample</groupId>
+    <artifactId>JakartaDataSample</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Plugins -->
+        <version.liberty-maven-plugin>3.7.1</version.liberty-maven-plugin>
+        <!-- OpenLiberty runtime -->
+        <version.openliberty-group>io.openliberty.beta</version.openliberty-group>
+        <version.openliberty-runtime>23.0.0.6-beta</version.openliberty-runtime>
+        <http.port>9080</http.port>
+        <https.port>9443</https.port>
+        <liberty.var.app.context.root>/</liberty.var.app.context.root>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+            <version>3.0.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>2.1.2</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+            <groupId>com.ibm.websphere.appserver.api</groupId>
+            <artifactId>com.ibm.websphere.appserver.api.passwordUtil</artifactId>
+            <version>[1.0.21,)</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- Enable liberty-maven plugin -->
+            <plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>${version.liberty-maven-plugin}</version>
+                <configuration>
+                    <assemblyArtifact>
+                        <groupId>${version.openliberty-group}</groupId>
+                        <artifactId>openliberty-runtime</artifactId>
+                        <version>${version.openliberty-runtime}</version>
+                        <type>zip</type>
+                    </assemblyArtifact>
+                    <serverName>JakartaDataServer</serverName>
+                    <bootstrapProperties>
+                        <default.http.port>${http.port}</default.http.port>
+                        <default.https.port>${https.port}</default.https.port>
+                        <app.context.root>${liberty.var.app.context.root}</app.context.root>
+                    </bootstrapProperties>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
