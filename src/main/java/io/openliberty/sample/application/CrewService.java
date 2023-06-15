@@ -19,6 +19,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.Consumes;
@@ -33,6 +34,9 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/crew")
 @ApplicationScoped
 public class CrewService {
+
+	@Inject
+	CrewMembers crewMembers;
 
 	@Inject
 	Validator validator;
@@ -51,22 +55,16 @@ public class CrewService {
 			}
 			return messages.build().toString();
 		}
-		//Replace with Jakarta Data
-		//MongoCollection<Document> crew = db.getCollection("Crew");
-		//Document newCrewMember = new Document();
-		//newCrewMember.put("Name",crewMember.getName());
-		//newCrewMember.put("Rank",crewMember.getRank());
-		//newCrewMember.put("CrewID",crewMember.getCrewID());
-		//crew.insertOne(newCrewMember);
+
+		crewMembers.save(crewMember);
+
 		return "";
 	}
 
 	@DELETE
 	@Path("/{id}")
 	public String remove(@PathParam("id") String id) {
-		//Replace with Jakarta Data
-		//MongoCollection<Document> crew = db.getCollection("Crew");
-		//crew.deleteOne(new Document("_id", new ObjectId(id))); 
+		crewMembers.deleteByCrewID(id);
 		return "";
 	}
 
@@ -76,21 +74,15 @@ public class CrewService {
 	public String retrieve() {
 		StringWriter sb = new StringWriter();
 
-		/* Replace with Jakarta Data 
-		try {
-			MongoCollection<Document> crew = db.getCollection("Crew");
-			sb.append("[");
-			boolean first = true;
-			for (Document d : crew.find()) {
-				if (!first) sb.append(",");
-				else first = false;
-				sb.append(d.toJson());
-			}
-			sb.append("]");
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		for (CrewMember c : crewMembers.findAll()) {	
+			JsonObject json = Json.createObjectBuilder()
+								.add("Name", c.getName())
+								.add("CrewID", c.getCrewID())
+								.add("Rank",c.getRank()).build();
+			jab.add(json);
+
 		}
-		*/
-		return sb.toString();
+		return jab.build().toString();
 	}
 }

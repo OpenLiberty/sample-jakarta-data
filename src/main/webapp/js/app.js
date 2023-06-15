@@ -43,8 +43,9 @@ function refreshDocDisplay() {
 	request.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			clearDisplay()		
-			doc = JSON.parse(this.responseText);
 			
+			doc = JSON.parse(this.responseText);
+
 			doc.forEach(addToDisplay);
 			if (doc.length > 0) {
 				document.getElementById("userDisplay").style.display = 'flex';
@@ -68,8 +69,8 @@ function addToDisplay(entry){
 					
 	var userDiv = document.createElement("div");
 	userDiv.setAttribute("class","user flexbox");
-	userDiv.setAttribute("id",entry._id.$oid);
-	userDiv.setAttribute("onclick","remove('"+entry._id.$oid+"')");
+	userDiv.setAttribute("id",entry.CrewID);
+	userDiv.setAttribute("onclick","remove('"+entry.CrewID+"')");
 	userDiv.innerHTML=userHtml;
 	document.getElementById("userBoxes").appendChild(userDiv);
 }

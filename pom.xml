@@ -25,6 +25,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>jakarta.data</groupId>
+            <artifactId>jakarta-data-api</artifactId>
+            <version>1.0.0-b2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
             <version>3.1.0</version>
@@ -34,12 +46,6 @@
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile.config</groupId>
-            <artifactId>microprofile-config-api</artifactId>
-            <version>3.0.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -83,6 +89,17 @@
                         <default.https.port>${https.port}</default.https.port>
                         <app.context.root>${liberty.var.app.context.root}</app.context.root>
                     </bootstrapProperties>
+                    <copyDependencies>
+                        <dependencyGroup>
+                            <!-- Relative to server config directory -->
+                            <location>lib/postgres</location>
+                            <dependency>
+                                <groupId>org.postgresql</groupId>
+                                <artifactId>postgresql</artifactId>
+                                <version>42.6.0</version>
+                            </dependency>
+                        </dependencyGroup>
+                    </copyDependencies>
                 </configuration>
             </plugin>
         </plugins>

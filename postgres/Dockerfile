@@ -1,0 +1,5 @@
+FROM postgres:15.3
+
+ENV POSTGRES_USER=sampleUser
+ENV POSTGRES_PASSWORD=openliberty
+ENV POSTGRES_DB=testdb
