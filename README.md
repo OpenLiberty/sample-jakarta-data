@@ -10,7 +10,7 @@ git clone git@github.com:OpenLiberty/sample-jakarta-data.git
 ```
 
 ### Setup PostgreSQL
-You will need a PostgreSQL instance to use this sample. If you have Docker installed, you can use the following:
+You will need a PostgreSQL instance to use this sample. If you have Docker installed, you can run the following from inside the sample-jakarta-data directory:
 
 ```
 docker build -t liberty_postgres postgres
@@ -18,9 +18,13 @@ docker run --name liberty_postgres -d -p 5432:5432 liberty_postgres
 ```
 If you are not using Docker, you will need to create a user with the name `sampleUser` and a password `openliberty` with access to a database named `testdb`
 
-### TODO
+## Running the Sample
+From inside the sample-jakarta-data directory, build and start the application in Open Liberty with the following command:
+```
+./mvnw liberty:dev
+```
 
-
+Once the server has started, the application is availible at http://localhost:9080
 
 
 ### Stop Postgres
