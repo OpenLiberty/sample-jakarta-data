@@ -10,6 +10,7 @@
 *******************************************************************************/
 
 function addCrewMember() {
+	
 	var crewMember = {};
 	crewMember.name = document.getElementById("crewMemberName").value;
 	var rank = document.getElementById("crewMemberRank");
@@ -27,8 +28,8 @@ function addCrewMember() {
 					toast(m, i++);
 				}
 			}
+			refreshDocDisplay();
 		}
-		refreshDocDisplay();
 	}
 
 	request.open("POST", "db/crew/"+crewMember.crewID, true);
@@ -38,15 +39,16 @@ function addCrewMember() {
 	
 
 function refreshDocDisplay() {
+	clearDisplay()
 	var request = new XMLHttpRequest();
-	
+	request.open("GET", "db/crew/", true);
 	request.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			clearDisplay()		
+					
 			
 			doc = JSON.parse(this.responseText);
 
-			doc.forEach(addToDisplay);
+			doc.forEach(addToCrewMembers);
 			if (doc.length > 0) {
 				document.getElementById("userDisplay").style.display = 'flex';
 				document.getElementById("docDisplay").style.display = 'flex';
@@ -54,15 +56,62 @@ function refreshDocDisplay() {
 				document.getElementById("userDisplay").style.display = 'none';
 				document.getElementById("docDisplay").style.display = 'none';
 			}
-			document.getElementById("docText").innerHTML = JSON.stringify(doc,null,2);
+			//document.getElementById("docText").innerHTML = JSON.stringify(doc,null,2);
 		}
 	}
-
-	request.open("GET", "db/crew/", true);
 	request.send();
+
+	//TODO find a way to reuse these requests
+	var request2 = new XMLHttpRequest();
+	request2.open("GET", "db/crew/rank/Captain", true);
+	request2.onreadystatechange = function() {
+		var rank = "Captain";
+		if (this.readyState == 4 && this.status == 200) {
+			membersList = JSON.parse(this.responseText);
+			if (membersList.length > 0) {
+				document.getElementById(rank).innerText = rank
+			}
+			for (let i = 0; i < membersList.length; i++) {
+				addToCrewMembersByRank(membersList[i], rank)
+			}
+		}
+	}
+	request2.send();
+
+	var request3 = new XMLHttpRequest();
+	request3.open("GET", "db/crew/rank/Officer", true);
+	request3.onreadystatechange = function() {
+		var rank = "Officer";
+		if (this.readyState == 4 && this.status == 200) {
+			membersList = JSON.parse(this.responseText);
+			if (membersList.length > 0) {
+				document.getElementById(rank).innerText = rank
+			}
+			for (let i = 0; i < membersList.length; i++) {
+				addToCrewMembersByRank(membersList[i], rank)
+			}
+		}
+	}
+	request3.send();
+
+	var request4 = new XMLHttpRequest();
+	request4.open("GET", "db/crew/rank/Engineer", true);
+	request4.onreadystatechange = function() {
+		var rank = "Engineer";
+		if (this.readyState == 4 && this.status == 200) {
+			membersList = JSON.parse(this.responseText);
+			if (membersList.length > 0) {
+				document.getElementById(rank).innerText = rank
+			}
+			for (let i = 0; i < membersList.length; i++) {
+				addToCrewMembersByRank(membersList[i], rank)
+			}
+		}
+	}
+	request4.send();
 }
 
-function addToDisplay(entry){
+function addToCrewMembers(entry){
 	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
 					"<div>ID: " + entry.CrewID + "</div>" +
 					"<div>Rank: " + entry.Rank + "</div>";
@@ -75,10 +124,24 @@ function addToDisplay(entry){
 	document.getElementById("userBoxes").appendChild(userDiv);
 }
 
+function addToCrewMembersByRank(entry, rank) {
+	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
+					"<div>ID: " + entry.CrewID + "</div>";
+					
+	var userDiv = document.createElement("div");
+	userDiv.setAttribute("class","user flexbox");
+	userDiv.setAttribute("id",entry.CrewID);
+	userDiv.innerHTML=userHtml;
+	document.getElementById(rank).appendChild(userDiv);
+}
+
 function clearDisplay(){
-	var usersDiv = document.getElementById("userBoxes");
-	while (usersDiv.firstChild) {
-		usersDiv.removeChild(usersDiv.firstChild);
+	var elements = ["userBoxes", "Captain", "Engineer", "Officer"];
+	for (let i = 0; i < elements.length; i++) {
+		var usersDiv = document.getElementById(elements[i]);
+		while (usersDiv.firstChild) {
+			usersDiv.removeChild(usersDiv.firstChild);
+		}
 	}
 }
 

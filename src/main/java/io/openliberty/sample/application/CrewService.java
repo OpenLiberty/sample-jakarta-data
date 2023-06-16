@@ -12,9 +12,6 @@ package io.openliberty.sample.application;
 
 import java.util.Set;
 
-import java.io.StringWriter;
-
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -68,12 +65,8 @@ public class CrewService {
 		return "";
 	}
 
-
-
 	@GET
 	public String retrieve() {
-		StringWriter sb = new StringWriter();
-
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		for (CrewMember c : crewMembers.findAll()) {	
 			JsonObject json = Json.createObjectBuilder()
@@ -82,6 +75,19 @@ public class CrewService {
 								.add("Rank",c.getRank()).build();
 			jab.add(json);
 
+		}
+		return jab.build().toString();
+	}
+
+	@GET
+	@Path("/rank/{rank}")
+	public String retrieveByRank(@PathParam("rank") String rank) {
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		for (CrewMember c : crewMembers.findByRank(rank)) {	
+			JsonObject json = Json.createObjectBuilder()
+								.add("Name", c.getName())
+								.add("CrewID", c.getCrewID()).build();
+			jab.add(json);
 		}
 		return jab.build().toString();
 	}
