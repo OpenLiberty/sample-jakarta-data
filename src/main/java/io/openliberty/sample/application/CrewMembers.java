@@ -10,7 +10,7 @@ import jakarta.data.repository.Repository;
 public interface CrewMembers extends DataRepository<CrewMember, String> {
     List<CrewMember> findByRank(String rank);
 
-    @OrderBy("crewID")
+    @OrderBy("name")
     List<CrewMember> findAll();
 
     void deleteByCrewID(String crewID);
