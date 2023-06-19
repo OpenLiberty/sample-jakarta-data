@@ -8,6 +8,7 @@ import jakarta.data.repository.Repository;
 
 @Repository
 public interface CrewMembers extends DataRepository<CrewMember, String> {
+    
     List<CrewMember> findByRank(String rank);
 
     @OrderBy("name")
