@@ -66,6 +66,18 @@
             <version>[1.0.21,)</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>6.2.3.Final</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -100,6 +112,16 @@
                             </dependency>
                         </dependencyGroup>
                     </copyDependencies>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <http.port>${http.port}</http.port>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
