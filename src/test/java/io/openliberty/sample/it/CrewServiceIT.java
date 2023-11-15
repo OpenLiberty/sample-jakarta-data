@@ -25,6 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
@@ -95,7 +96,37 @@ public class CrewServiceIT {
             if (value.asJsonObject().equals(expectedObject)) found = true;
         }
         assertFalse(found,"Json object should not have been found in Array");
-    } 
+    }
+    
+    @Test
+    public void testValidationCrewMember() {
+        assumeTrue(isPostgresAvailable(), "Postgres is not Available");
+
+        //Name Validation
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
+
+        JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        JsonArray array = reader.readArray();
+        assertEquals(1, array.size(), "Validation array should have only contained 1 message");
+        assertEquals("\"All crew members must have a name!\"", array.get(0).toString());   
+        
+        //Rank Validation
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Scientist\",\"crewID\":\"75\"}"));
+
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        array = reader.readArray();
+        assertEquals(1, array.size(), "Validation array should have only contained 1 message");
+        assertEquals("\"Crew member must be one of the listed ranks!\"", array.get(0).toString());    
+
+        //CrewID Validation
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"-1\"}"));
+
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        array = reader.readArray();
+        assertEquals(1, array.size(), "Validation array should have only contained 1 message");
+        assertEquals("\"ID Number must be a non-negative integer!\"", array.get(0).toString());    
+
+    }
 
 
     private boolean isPostgresAvailable() {
