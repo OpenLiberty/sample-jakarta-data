@@ -11,24 +11,27 @@
 package io.openliberty.sample.it;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.Socket;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.openliberty.sample.application.CrewMember;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonValue;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
 
 public class CrewServiceIT {
     
@@ -56,12 +59,42 @@ public class CrewServiceIT {
     }
 
     @Test
-    public void testAddUpdateDeleteCrewMember() {
-        assumeTrue(isPostgresAvailable(), "Postgres is not Available");  
+    public void testAddGetDeleteCrewMember() {
+        assumeTrue(isPostgresAvailable(), "Postgres is not Available");
+        
+        //Remove Existing
+        response = client.target(baseURL + "db/crew/75").request().delete();
+        assertEquals(response.getStatus(), 200);     
 
-        response = client.target(baseURL + "db/crew/test").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
+        //Check Add
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
         assertEquals(response.getStatus(), 200);
 
+        //Check Get
+        response = client.target(baseURL + "db/crew").request().get();
+        JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        JsonObject expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", "75").add("Rank", "Captain").build();
+        
+        boolean found = false;
+        for (JsonValue value : reader.readArray()) {
+            if (value.asJsonObject().equals(expectedObject)) found = true;
+        }
+        assertTrue(found,"Json object not found in returned array");
+
+        //Check Delete
+        response = client.target(baseURL + "db/crew/75").request().delete();
+        assertEquals(response.getStatus(), 200); 
+
+        //Confirm Delete
+        response = client.target(baseURL + "db/crew").request().get();
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", "75").add("Rank", "Captain").build();
+        
+        found = false;
+        for (JsonValue value : reader.readArray()) {
+            if (value.asJsonObject().equals(expectedObject)) found = true;
+        }
+        assertFalse(found,"Json object should not have been found in Array");
     } 
 
 

@@ -78,6 +78,12 @@
             <version>6.2.3.Final</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.parsson</groupId>
+            <artifactId>parsson</artifactId>
+            <version>1.1.5</version>
+            <scope>test</scope>
+        </dependency>    
     </dependencies>
 
     <build>
