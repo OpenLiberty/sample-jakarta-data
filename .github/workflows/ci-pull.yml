@@ -23,6 +23,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Start Server
+      run: mvn -B compiler:testCompile
+    - name: Start Server
       run: mvn -B liberty:test-start
     - name: Run Integration Tests
       run: mvn -B failsafe:integration-test
