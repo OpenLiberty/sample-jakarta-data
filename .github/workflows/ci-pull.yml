@@ -5,7 +5,9 @@ name: Java CI with Maven on Pull
 
 on:
   pull_request:
-    branches: [ "main", "actions" ]
+    branches: [ "main" ]
+  push:
+    branches: [ "actions"]
 
 permissions:
   contents: read
