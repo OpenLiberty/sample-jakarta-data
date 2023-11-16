@@ -5,7 +5,9 @@ name: Java CI with Maven on Pull
 
 on:
   pull_request:
-    branches: [ "main", "actions" ]
+    branches: [ "main" ]
+  push:
+    branches: [ "actions"]
 
 permissions:
   contents: read
@@ -13,6 +15,22 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15.3
+        env:
+          POSTGRES_USER: sampleUser
+          POSTGRES_PASSWORD: openliberty
+          POSTGRES_DB: testdb
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -22,11 +40,29 @@ jobs:
         java-version: 21
         distribution: 'temurin'
         cache: maven
+    - name: Compile App and Tests
+      run: |
+           mvn -B compiler:compile
+           mvn -B compiler:testCompile
+    - name: Create Server and Deploy App
+      run: |
+           mvn -B liberty:create
+           mvn -B liberty:deploy
     - name: Start Server
-      run: mvn -B compiler:testCompile
-    - name: Start Server
-      run: mvn -B liberty:test-start
+      run: mvn -B liberty:start
     - name: Run Integration Tests
       run: mvn -B failsafe:integration-test
     - name: Stop Server
-      run: mvn -B liberty:test-stop  
+      run: mvn -B liberty:stop
+    - name: Verify Integration Test Results
+      run: mvn -B failsafe:verify
+    - name: Archive Liberty logs
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: liberty-logs
+        path: target/liberty/wlp/usr/servers/JakartaDataServer/logs/
+        retention-days: 1
+
+
+

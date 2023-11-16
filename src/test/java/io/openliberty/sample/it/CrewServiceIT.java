@@ -42,8 +42,7 @@ public class CrewServiceIT {
     private Response response;
 
     @BeforeAll
-    public static void init() {
-        
+    public static void init() {       
         String port = System.getProperty("http.port");
         baseURL = "http://localhost:" + port + "/";
     }
@@ -56,6 +55,7 @@ public class CrewServiceIT {
 
     @AfterEach
     public void teardown() {
+      response.close();
       client.close();
     }
 
@@ -65,11 +65,11 @@ public class CrewServiceIT {
         
         //Remove Existing
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(response.getStatus(), 200);     
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));     
 
         //Check Add
         response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
-        assertEquals(response.getStatus(), 200);
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
 
         //Check Get
         response = client.target(baseURL + "db/crew").request().get();
@@ -84,7 +84,7 @@ public class CrewServiceIT {
 
         //Check Delete
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(response.getStatus(), 200); 
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class)); 
 
         //Confirm Delete
         response = client.target(baseURL + "db/crew").request().get();
@@ -131,7 +131,6 @@ public class CrewServiceIT {
 
     private boolean isPostgresAvailable() {
         return checkHostAndPort("localhost", 5432);
-        // || checkHostAndPort("otherHost", 5432);
     }
     
     private boolean checkHostAndPort(String host, int port) {
