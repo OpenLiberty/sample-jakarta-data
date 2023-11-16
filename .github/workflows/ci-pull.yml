@@ -44,6 +44,9 @@ jobs:
       run: mvn -B compiler:testCompile
     - name: Start Server
       run: mvn -B liberty:test-start
+    - name: Sleep 15s
+      run: sleep 30s
+      shell: bash
     - name: Run Integration Tests
       run: mvn -B failsafe:integration-test
     - name: Stop Server
