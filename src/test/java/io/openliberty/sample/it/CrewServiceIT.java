@@ -65,11 +65,11 @@ public class CrewServiceIT {
         
         //Remove Existing
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(response.getStatus(), 200);     
+        assertEquals(200, response.getStatus());     
 
         //Check Add
         response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
-        assertEquals(response.getStatus(), 200);
+        assertEquals(200, response.getStatus());
 
         //Check Get
         response = client.target(baseURL + "db/crew").request().get();
@@ -84,7 +84,7 @@ public class CrewServiceIT {
 
         //Check Delete
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(response.getStatus(), 200); 
+        assertEquals(200, response.getStatus()); 
 
         //Confirm Delete
         response = client.target(baseURL + "db/crew").request().get();

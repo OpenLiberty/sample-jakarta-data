@@ -47,4 +47,7 @@ jobs:
     - name: Run Integration Tests
       run: mvn -B failsafe:integration-test
     - name: Stop Server
-      run: mvn -B liberty:test-stop  
+      run: mvn -B liberty:test-stop
+    - name: Verify Integration Test Results
+      run: mvn -B failsafe:verify
+
