@@ -65,7 +65,7 @@ public class CrewServiceIT {
         
         //Remove Existing
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(200, response.getStatus());     
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));     
 
         //Check Add
         response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
