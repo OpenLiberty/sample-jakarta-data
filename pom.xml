@@ -17,7 +17,7 @@
         <version.liberty-maven-plugin>3.7.1</version.liberty-maven-plugin>
         <!-- OpenLiberty runtime -->
         <version.openliberty-group>io.openliberty.beta</version.openliberty-group>
-        <version.openliberty-runtime>23.0.0.6-beta</version.openliberty-runtime>
+        <version.openliberty-runtime>23.0.0.12-beta</version.openliberty-runtime>
         <http.port>9080</http.port>
         <https.port>9443</https.port>
         <liberty.var.app.context.root>/</liberty.var.app.context.root>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>jakarta.data</groupId>
             <artifactId>jakarta-data-api</artifactId>
-            <version>1.0.0-b2</version>
+            <version>1.0.0-M1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
