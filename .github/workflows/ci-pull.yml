@@ -40,23 +40,24 @@ jobs:
         java-version: 21
         distribution: 'temurin'
         cache: maven
-    - name: Compile App
-      run: mvn -B compiler:compile
-    - name: Compile Tests
-      run: mvn -B compiler:testCompile
-    - name: Create Server
-      run: mvn -B liberty:create
-    - name: Deploy App
-      run: mvn -B liberty:deploy
+    - name: Compile App and Tests
+      run: |
+           mvn -B compiler:compile
+           mvn -B compiler:testCompile
+    - name: Create Server and Deploy App
+      run: |
+           mvn -B liberty:create
+           mvn -B liberty:deploy
     - name: Start Server
-      run: mvn -B liberty:test-start
+      run: mvn -B liberty:start
     - name: Run Integration Tests
       run: mvn -B failsafe:integration-test
     - name: Stop Server
-      run: mvn -B liberty:test-stop
+      run: mvn -B liberty:stop
     - name: Verify Integration Test Results
       run: mvn -B failsafe:verify
     - name: Archive Liberty logs
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v3
       with:
         name: liberty-logs
