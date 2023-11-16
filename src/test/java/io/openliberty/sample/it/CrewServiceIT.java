@@ -55,7 +55,6 @@ public class CrewServiceIT {
 
     @AfterEach
     public void teardown() {
-      response.close();
       client.close();
     }
 
