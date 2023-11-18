@@ -27,7 +27,7 @@ From inside the `sample-jakarta-data` directory, build and start the application
 Once the server has started, the application is availible at http://localhost:9080
 
 ### Try it out
-Give the sample a try by registering a crew member. Enter a name (a String), an ID Number (an **Integer**), and select a Rank from the menu, then click 'Register Crew Member'.
+Give the sample a try by registering a crew member. Enter a name (a **String**), an ID Number (an **Integer**), and select a Rank from the menu, then click 'Register Crew Member'.
 
 Two more boxes will appear, one with all of your crew members (which you can click to remove) and one showing your crew members sorted by rank.
 
@@ -43,7 +43,7 @@ public class CrewService {
 CrewMembers crewMembers;
 ```
 
-The first endpoint persists a **crewMember** in the database by calling `crewMembers.save()`
+The first endpoint persists a **CrewMember** in the database by calling `crewMembers.save()`
 
 ```java
 public String add(CrewMember crewMember) {
@@ -55,13 +55,13 @@ public String add(CrewMember crewMember) {
     crewMembers.save(crewMember);
 ```
 
-To remove an individual **crewMember** from the database based on the ID, you can use `crewMembers.deleteByCrewID`
+To remove an individual **CrewMember** from the database based on the ID, you can use `crewMembers.deleteByCrewID`
 ```java
 public String remove(@PathParam("id") String id) {
     crewMembers.deleteByCrewID(id);
 ```
 
-In order to display all of our **crewMembers**, you can get all of them easily by calling `crewMembers.findAll()`
+In order to display all of our **CrewMember**s, you can get all of them easily by calling `crewMembers.findAll()`
 ```java
 public String retrieve() {
     JsonArrayBuilder jab = Json.createArrayBuilder();
@@ -75,7 +75,7 @@ public interface CrewMembers {
 List<CrewMember> findAll();
 ```
 
-Finally, for a slightly more complex operation, we can ask for a subset of the **crewMembers** with a given **Rank**, using `crewMembers.findByRank()`
+Finally, for a slightly more complex operation, we can ask for a subset of the **CrewMember**s with a given **Rank**, using `crewMembers.findByRank()`
 ```java
 public String retrieveByRank(@PathParam("rank") String rank) {
     JsonArrayBuilder jab = Json.createArrayBuilder();
@@ -83,7 +83,7 @@ public String retrieveByRank(@PathParam("rank") String rank) {
 ```
 
 ### How it works: Database tier
-The application entirely relies on Jakarta Persistence. In Jakarta Persistence, the connection to the database is defined as a **dataSource**. In the Liberty implementation of Jakarta EE, the **dataSource** is configured in the [server.xml](src/main/liberty/config/server.xml).
+The application entirely relies on Jakarta Persistence. In Jakarta Persistence, the connection to the database is defined as a **DataSource**. In the Liberty implementation of Jakarta EE, the **DataSource** is configured in the [server.xml](src/main/liberty/config/server.xml).
 
 ## Stop Postgres
 When you are done trying out the sample application, you can stop the Postgres container with:
