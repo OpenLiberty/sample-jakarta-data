@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import jakarta.data.repository.BasicRepository;
-import jakarta.data.repository.DataRepository;
 import jakarta.data.repository.OrderBy;
 import jakarta.data.repository.Repository;
 

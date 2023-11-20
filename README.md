@@ -31,7 +31,7 @@ Give the sample a try by registering a crew member. Enter a name (a **String**),
 
 Two more boxes will appear, one with all of your crew members (which you can click to remove) and one showing your crew members sorted by rank.
 
-### How it works: Application tier
+### How it works
 This application provides a few REST endpoints to demonstrate some of the capabilities of Jakarta Data. By defining a Jakarta Persistence **Entity** class ([CrewMember](src/main/java/io/openliberty/sample/application/CrewMember.java)) you extend the Jakarta Data **DataRepository** interface ([CrewMembers](src/main/java/io/openliberty/sample/application/CrewMembers.java)) with query methods and apply the **Repository** annotation. When the **Repository** is injected into another object using CDI, Jakarta Data will provide an implementation of the interface, including implementations of the query methods, as shown in [CrewService](src/main/java/io/openliberty/sample/application/CrewService.java)
 
 We can start by injecting the **Repository** in our application using CDI
@@ -82,8 +82,9 @@ public String retrieveByRank(@PathParam("rank") String rank) {
     for (CrewMember c : crewMembers.findByRank(rank)) {	
 ```
 
-### How it works: Database tier
-The application entirely relies on Jakarta Persistence. In Jakarta Persistence, the connection to the database is defined as a **DataSource**. In the Liberty implementation of Jakarta EE, the **DataSource** is configured in the [server.xml](src/main/liberty/config/server.xml).
+### Data Source configuration
+
+The application makes use of Open Liberty's built in Jakarta Data implementation, backed by Jakarta Persistence. The connection to the database is defined as a **DataSource**, which is configured in the [server.xml](src/main/liberty/config/server.xml).
 
 ## Stop Postgres
 When you are done trying out the sample application, you can stop the Postgres container with:
