@@ -60,22 +60,21 @@ public class CrewService {
 
 	@DELETE
 	@Path("/{id}")
-	public String remove(@PathParam("id") String id) {
+	public void remove(@PathParam("id") String id) {
 		crewMembers.deleteByCrewID(id);
-		return "";
 	}
 
 	@GET
 	public String retrieve() {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
-		for (CrewMember c : crewMembers.findAll()) {	
+		crewMembers.findAll().forEach( c -> {
 			JsonObject json = Json.createObjectBuilder()
 								.add("Name", c.getName())
 								.add("CrewID", c.getCrewID())
 								.add("Rank",c.getRank()).build();
 			jab.add(json);
 
-		}
+	  	});
 		return jab.build().toString();
 	}
 
@@ -90,5 +89,10 @@ public class CrewService {
 			jab.add(json);
 		}
 		return jab.build().toString();
+	}
+
+	@DELETE
+	public void remove() {
+		crewMembers.deleteAll();
 	}
 }
