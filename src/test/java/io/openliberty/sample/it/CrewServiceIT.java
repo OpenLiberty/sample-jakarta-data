@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
 import jakarta.ws.rs.client.Client;
@@ -55,7 +56,7 @@ public class CrewServiceIT {
 
     @AfterEach
     public void teardown() {
-      client.close();
+            client.close();
     }
 
     @Test
@@ -64,7 +65,7 @@ public class CrewServiceIT {
         
         //Remove Existing
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));     
+        assertEquals(204, response.getStatus(), "output: " + response.readEntity(String.class));     
 
         //Check Add
         response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
@@ -83,7 +84,7 @@ public class CrewServiceIT {
 
         //Check Delete
         response = client.target(baseURL + "db/crew/75").request().delete();
-        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class)); 
+        assertEquals(204, response.getStatus(), "output: " + response.readEntity(String.class)); 
 
         //Confirm Delete
         response = client.target(baseURL + "db/crew").request().get();
@@ -126,7 +127,6 @@ public class CrewServiceIT {
         assertEquals("\"ID Number must be a non-negative integer!\"", array.get(0).toString());    
 
     }
-
 
     private boolean isPostgresAvailable() {
         return checkHostAndPort("localhost", 5432);
