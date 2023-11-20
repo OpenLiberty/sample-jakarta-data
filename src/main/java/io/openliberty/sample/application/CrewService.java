@@ -92,7 +92,6 @@ public class CrewService {
 	}
 
 	@DELETE
-	@Path("/")
 	public void remove() {
 		crewMembers.deleteAll();
 	}
