@@ -10,7 +10,7 @@ import jakarta.data.repository.Repository;
 @Repository
 public interface CrewMembers extends BasicRepository<CrewMember, String> {
     
-    List<CrewMember> findByRank(String rank);
+    List<CrewMember> findByRank(Rank rank);
 
     @OrderBy("name")
     Stream<CrewMember> findAll();

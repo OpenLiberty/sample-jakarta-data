@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
 import jakarta.ws.rs.client.Client;
@@ -53,6 +52,8 @@ public class CrewServiceIT {
     public void setup() {
       client = ClientBuilder.newClient();
       assumeTrue(isPostgresAvailable(), "Postgres is not Available");
+      response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
+      assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
       response = client.target(baseURL + "db/crew/").request().delete(); //Delete All before each test
       assertEquals(204, response.getStatus(), "output: " + response.readEntity(String.class)); 
     }

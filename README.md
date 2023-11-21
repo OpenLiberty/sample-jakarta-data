@@ -49,7 +49,7 @@ The first endpoint persists a **CrewMember** in the database by calling `crewMem
 public String add(CrewMember crewMember) {
     
     //...
-    //Jakarta Bean Validation
+    //Jakarta Validation
     //...
 
     crewMembers.save(crewMember);

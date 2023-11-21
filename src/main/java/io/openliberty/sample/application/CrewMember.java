@@ -14,6 +14,7 @@ package io.openliberty.sample.application;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
@@ -22,8 +23,8 @@ public class CrewMember {
 	@NotEmpty(message = "All crew members must have a name!")
 	private String name;
 
-	@Pattern(regexp = "(Captain|Officer|Engineer)", message = "Crew member must be one of the listed ranks!")
-	private String rank;
+	@NotNull(message = "Crew member must be one of the listed ranks!")
+	private Rank rank;
 
 	@Id
 	@Pattern(regexp = "^\\d+$", message = "ID Number must be a non-negative integer!")
@@ -37,11 +38,11 @@ public class CrewMember {
 		this.name = name;
 	}
 
-	public String getRank() {
+	public Rank getRank() {
 		return rank;
 	}
 
-	public void setRank(String rank) {
+	public void setRank(Rank rank) {
 		this.rank = rank;
 	}
 
