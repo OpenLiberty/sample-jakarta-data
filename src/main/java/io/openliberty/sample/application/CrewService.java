@@ -71,7 +71,7 @@ public class CrewService {
 			JsonObject json = Json.createObjectBuilder()
 								.add("Name", c.getName())
 								.add("CrewID", c.getCrewID())
-								.add("Rank",c.getRank()).build();
+								.add("Rank",c.getRank().toString()).build();
 			jab.add(json);
 
 	  	});
@@ -82,7 +82,7 @@ public class CrewService {
 	@Path("/rank/{rank}")
 	public String retrieveByRank(@PathParam("rank") String rank) {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
-		for (CrewMember c : crewMembers.findByRank(rank)) {	
+		for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank))) {	
 			JsonObject json = Json.createObjectBuilder()
 								.add("Name", c.getName())
 								.add("CrewID", c.getCrewID()).build();
