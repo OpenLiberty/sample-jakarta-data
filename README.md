@@ -79,7 +79,7 @@ Finally, for a slightly more complex operation, we can ask for a subset of the *
 ```java
 public String retrieveByRank(@PathParam("rank") String rank) {
     JsonArrayBuilder jab = Json.createArrayBuilder();
-    for (CrewMember c : crewMembers.findByRank(rank)) {	
+	for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank))) {
 ```
 
 ### Data Source configuration
