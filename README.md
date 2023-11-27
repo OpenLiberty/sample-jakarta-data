@@ -3,13 +3,13 @@
 # Jakarta Data Sample
 This sample shows how to store and retrieve data using Jakarta Data. Jakarta Data is planned to release in Jakarta EE 11, and is currently in beta in Open Liberty.
 
-## Environment Set Up
+## Environment Setup
 To run this sample, first [download](https://github.com/OpenLiberty/sample-jakarta-data/archive/main.zip) or clone this repo - to clone:
 ```
 git clone git@github.com:OpenLiberty/sample-jakarta-data.git
 ```
 
-### Setup PostgreSQL
+### Set Up PostgreSQL
 You will need a PostgreSQL instance to use this sample. If you have Docker installed, you can run the following from inside the `sample-jakarta-data` directory:
 
 ```
