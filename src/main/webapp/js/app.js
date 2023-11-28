@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2019 IBM Corporation and others.
+* Copyright (c) 2023 IBM Corporation and others.
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -9,7 +9,7 @@
 *     IBM Corporation - initial API and implementation
 *******************************************************************************/
 
-function addCrewMember() {
+async function addCrewMember() {
 	
 	var crewMember = {};
 	crewMember.name = document.getElementById("crewMemberName").value;
@@ -18,7 +18,27 @@ function addCrewMember() {
 	crewMember.crewID = document.getElementById("crewMemberID").value;
 
 	
-	var request = new XMLHttpRequest();
+	const response = await fetch("db/crew/"+crewMember.crewID, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(crewMember),
+	})
+
+	if (response.ok) {
+		var i = 0;
+		const body = await response.text();
+		console.log(body)
+		if (body != '') {
+			for (m of JSON.parse(body)) {
+				toast(m, i++);
+			}
+		}
+		refreshDocDisplay();
+	}
+	/*
+	var request = new XMLHttpRequest();	
 
 	request.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -35,6 +55,7 @@ function addCrewMember() {
 	request.open("POST", "db/crew/"+crewMember.crewID, true);
 	request.setRequestHeader("Content-type", "application/json");
 	request.send(JSON.stringify(crewMember));
+	*/
 }
 	
 
@@ -77,6 +98,7 @@ function refreshDocDisplay() {
 		}
 	}
 	request2.send();
+
 
 	var request3 = new XMLHttpRequest();
 	request3.open("GET", "db/crew/rank/Officer", true);
