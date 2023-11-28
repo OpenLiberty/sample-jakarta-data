@@ -18,7 +18,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validator;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -35,25 +35,21 @@ public class CrewService {
 	@Inject
 	CrewMembers crewMembers;
 
-	@Inject
-	Validator validator;
-
 	@POST
 	@Path("/{id}") 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON) 
 	public String add(CrewMember crewMember) {
-		
-		Set<ConstraintViolation<CrewMember>> violations = validator.validate(crewMember);
-		if(violations.size() > 0) {
+
+		try {
+			crewMembers.save(crewMember);
+		} catch (ConstraintViolationException x) {
 			JsonArrayBuilder messages = Json.createArrayBuilder();
-			for (ConstraintViolation<CrewMember> v : violations) { 			
+			for (ConstraintViolation<?> v : x.getConstraintViolations()) {
 				messages.add(v.getMessage());
 			}
 			return messages.build().toString();
 		}
-
-		crewMembers.save(crewMember);
 
 		return "";
 	}
