@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2019 IBM Corporation and others.
+* Copyright (c) 2023 IBM Corporation and others.
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -9,7 +9,7 @@
 *     IBM Corporation - initial API and implementation
 *******************************************************************************/
 
-function addCrewMember() {
+async function addCrewMember() {
 	
 	var crewMember = {};
 	crewMember.name = document.getElementById("crewMemberName").value;
@@ -18,97 +18,66 @@ function addCrewMember() {
 	crewMember.crewID = document.getElementById("crewMemberID").value;
 
 	
-	var request = new XMLHttpRequest();
+	const response = await fetch("db/crew/"+crewMember.crewID, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(crewMember),
+	})
 
-	request.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var i = 0;
-			if (this.response != '') {
-				for (m of JSON.parse(this.response)) {
-					toast(m, i++);
-				}
+	if (response.ok) {
+		var i = 0;
+		const body = await response.text();
+		if (body.length > 0) {
+			for (m of JSON.parse(body)) {
+				toast(m, i++);
 			}
-			refreshDocDisplay();
 		}
+		refreshDocDisplay();
 	}
-
-	request.open("POST", "db/crew/"+crewMember.crewID, true);
-	request.setRequestHeader("Content-type", "application/json");
-	request.send(JSON.stringify(crewMember));
 }
 	
 
-function refreshDocDisplay() {
+async function refreshDocDisplay() {
 	clearDisplay()
-	var request = new XMLHttpRequest();
-	request.open("GET", "db/crew/", true);
-	request.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-					
-			
-			doc = JSON.parse(this.responseText);
 
-			doc.forEach(addToCrewMembers);
-			if (doc.length > 0) {
-				document.getElementById("userDisplay").style.display = 'flex';
-				document.getElementById("docDisplay").style.display = 'flex';
-			} else {
-				document.getElementById("userDisplay").style.display = 'none';
-				document.getElementById("docDisplay").style.display = 'none';
-			}
-			//document.getElementById("docText").innerHTML = JSON.stringify(doc,null,2);
+	response = await fetch("db/crew/");
+
+	if (response.ok) {
+		const doc = await response.json();
+
+		doc.forEach(addToCrewMembers);
+		if (doc.length > 0) {
+			document.getElementById("userDisplay").style.display = 'flex';
+			document.getElementById("docDisplay").style.display = 'flex';
+		} else {
+			document.getElementById("userDisplay").style.display = 'none';
+			document.getElementById("docDisplay").style.display = 'none';
 		}
 	}
-	request.send();
 
-	//TODO find a way to reuse these requests
-	var request2 = new XMLHttpRequest();
-	request2.open("GET", "db/crew/rank/Captain", true);
-	request2.onreadystatechange = function() {
-		var rank = "Captain";
-		if (this.readyState == 4 && this.status == 200) {
-			membersList = JSON.parse(this.responseText);
-			if (membersList.length > 0) {
-				document.getElementById(rank).innerText = rank
-			}
-			for (let i = 0; i < membersList.length; i++) {
-				addToCrewMembersByRank(membersList[i], rank)
-			}
+	response = await fetch("db/crew/rank/Captain");
+	parseFindByRank("Captain", response);
+
+	response = await fetch("db/crew/rank/Officer");
+	parseFindByRank("Officer", response);
+
+	response = await fetch("db/crew/rank/Engineer");
+	parseFindByRank("Engineer", response);
+
+}
+
+async function parseFindByRank(rank, response) {
+	if (response.ok) {
+		membersList = await response.json()
+		if (membersList.length > 0) {
+			document.getElementById(rank).innerText = rank
+		}
+		for (let i = 0; i < membersList.length; i++) {
+			addToCrewMembersByRank(membersList[i], rank)
 		}
 	}
-	request2.send();
-
-	var request3 = new XMLHttpRequest();
-	request3.open("GET", "db/crew/rank/Officer", true);
-	request3.onreadystatechange = function() {
-		var rank = "Officer";
-		if (this.readyState == 4 && this.status == 200) {
-			membersList = JSON.parse(this.responseText);
-			if (membersList.length > 0) {
-				document.getElementById(rank).innerText = rank
-			}
-			for (let i = 0; i < membersList.length; i++) {
-				addToCrewMembersByRank(membersList[i], rank)
-			}
-		}
-	}
-	request3.send();
-
-	var request4 = new XMLHttpRequest();
-	request4.open("GET", "db/crew/rank/Engineer", true);
-	request4.onreadystatechange = function() {
-		var rank = "Engineer";
-		if (this.readyState == 4 && this.status == 200) {
-			membersList = JSON.parse(this.responseText);
-			if (membersList.length > 0) {
-				document.getElementById(rank).innerText = rank
-			}
-			for (let i = 0; i < membersList.length; i++) {
-				addToCrewMembersByRank(membersList[i], rank)
-			}
-		}
-	}
-	request4.send();
 }
 
 function addToCrewMembers(entry){
@@ -145,18 +114,15 @@ function clearDisplay(){
 	}
 }
 
-function remove(id) {
-	var request = new XMLHttpRequest();
-	
-	request.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById(id).remove();
-			refreshDocDisplay()
-		}
+async function remove(id) {
+	const response = await fetch("db/crew/"+id, {
+		method: "DELETE",
+	})
+
+	if (response.ok) {
+		refreshDocDisplay()
 	}
 
-	request.open("DELETE", "db/crew/"+id, true);
-	request.send();
 }
 
 function toast(message, index) {
