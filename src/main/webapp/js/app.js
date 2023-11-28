@@ -149,7 +149,7 @@ function remove(id) {
 	var request = new XMLHttpRequest();
 	
 	request.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
+		if (this.readyState == 4 && this.status == 204) {
 			document.getElementById(id).remove();
 			refreshDocDisplay()
 		}
