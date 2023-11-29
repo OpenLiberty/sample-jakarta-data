@@ -33,8 +33,13 @@ async function addCrewMember() {
 			for (m of JSON.parse(body)) {
 				toast(m, i++);
 			}
+		} else {
+			refreshDisplay();
 		}
-		refreshDisplay();
+	} else {
+		const body = await response.text();
+		if (body.includes("Unable to deserialize property 'crewID'"))
+			toast("ID Number must be a non-negative integer!",0)
 	}
 }
 

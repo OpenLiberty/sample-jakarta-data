@@ -10,8 +10,6 @@
 *******************************************************************************/
 package io.openliberty.sample.application;
 
-import java.util.Set;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -56,7 +54,7 @@ public class CrewService {
 
 	@DELETE
 	@Path("/{id}")
-	public void remove(@PathParam("id") String id) {
+	public void remove(@PathParam("id") int id) {
 		crewMembers.deleteByCrewID(id);
 	}
 
