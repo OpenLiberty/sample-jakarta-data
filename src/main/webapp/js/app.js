@@ -42,66 +42,9 @@ async function addCrewMember() {
 async function refreshDocDisplay() {
 	clearDisplay()
 
-	response = await fetch("db/crew/");
+	if (document.getElementById("userDisplay").style.display == 'flex') refreshFindAll();
+	if (document.getElementById("docDisplay").style.display == 'flex') refreshFindByRank();
 
-	if (response.ok) {
-		const doc = await response.json();
-
-		doc.forEach(addToCrewMembers);
-		if (doc.length > 0) {
-			document.getElementById("userDisplay").style.display = 'flex';
-			document.getElementById("docDisplay").style.display = 'flex';
-		} else {
-			document.getElementById("userDisplay").style.display = 'none';
-			document.getElementById("docDisplay").style.display = 'none';
-		}
-	}
-
-	response = await fetch("db/crew/rank/Captain");
-	parseFindByRank("Captain", response);
-
-	response = await fetch("db/crew/rank/Officer");
-	parseFindByRank("Officer", response);
-
-	response = await fetch("db/crew/rank/Engineer");
-	parseFindByRank("Engineer", response);
-
-}
-
-async function parseFindByRank(rank, response) {
-	if (response.ok) {
-		membersList = await response.json()
-		if (membersList.length > 0) {
-			document.getElementById(rank).innerText = rank
-		}
-		for (let i = 0; i < membersList.length; i++) {
-			addToCrewMembersByRank(membersList[i], rank)
-		}
-	}
-}
-
-function addToCrewMembers(entry){
-	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
-					"<div>ID: " + entry.CrewID + "</div>" +
-					"<div>Rank: " + entry.Rank + "</div>";
-					
-	var userDiv = document.createElement("div");
-	userDiv.setAttribute("class","user flexbox");
-	userDiv.setAttribute("id",entry.CrewID);
-	userDiv.setAttribute("onclick","remove('"+entry.CrewID+"')");
-	userDiv.innerHTML=userHtml;
-	document.getElementById("userBoxes").appendChild(userDiv);
-}
-
-function addToCrewMembersByRank(entry, rank) {
-	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
-					"<div>ID: " + entry.CrewID + "</div>";
-					
-	var userDiv = document.createElement("div");
-	userDiv.setAttribute("class","user flexbox");
-	userDiv.setAttribute("id",entry.CrewID);
-	userDiv.innerHTML=userHtml;
-	document.getElementById(rank).appendChild(userDiv);
 }
 
 function clearDisplay(){
