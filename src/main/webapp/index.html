@@ -18,6 +18,8 @@
 <html>
     <head>
 		<title>Jakarta Data Sample</title>
+		<script type="text/javascript" src="js/find-all.js"></script>
+		<script type="text/javascript" src="js/find-by-rank.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
 		<link rel="stylesheet" href="css/app.css">
@@ -53,13 +55,18 @@
 					</div>
 					<button id="registerButton" class="buttons" onclick="addCrewMember()">Register Crew Member</button>
 				</div>
-				<div id="userDisplay" class="vFlexContainer">
+				<div id="queryMenu" class="vFlexContainer">
+					<strong id="createCrewMember" class="flexSelfCenter">Queries</strong>
+					<button id="registerButton" class="buttons" onclick="setActiveQuery('findAll')">findAll</button>
+					<button id="registerButton" class="buttons" onclick="setActiveQuery('findByRank')">findByRank</button>
+				</div>
+				<div id="findAll" class="vFlexContainer queryContainer" style="display: flex">
 					<strong id="createCrewMember" class="flexSelfCenter">Crew Members<br>CrewMembers.findAll()</strong>
 					<div id="createCrewMember" class="flexSelfCenter">(click to remove)</div>
 					<div id="userBoxes" class="flexBox hFlexContainer">
 					</div>
 				</div>
-				<div id="docDisplay" class="flexBox vFlexContainer">
+				<div id="findByRank" class="flexBox vFlexContainer queryContainer">
 						<strong id="createCrewMember" class="flexSelfCenter">Crew Members by Rank<br>CrewMembers.findByRank()</strong>
 					<pre id="Captain"></pre>
 					<pre id="Officer"></pre>
@@ -77,11 +84,11 @@
           <a href="https://openliberty.io/">openliberty.io</a>
         </div>
         <p id="footer_text">an IBM open source project</p>
-        <p id="footer_copyright">&copy;Copyright IBM Corp. 2019</p>
+        <p id="footer_copyright">&copy;Copyright IBM Corp. 2023</p>
 	</footer>
 	
 	<div id="toast">
 </html>
 <script>
-refreshDocDisplay();
+refreshDisplay();
 </script>
