@@ -34,16 +34,26 @@ async function addCrewMember() {
 				toast(m, i++);
 			}
 		}
-		refreshDocDisplay();
+		refreshDisplay();
 	}
+}
+
+function setActiveQuery(query) {
+	var nodes = document.querySelectorAll('.queryContainer');
+	for (var i = 0; i < nodes.length; i++) {
+		if (nodes.item(i).id == query) nodes.item(i).style.display = 'flex';
+		else nodes.item(i).style.display = 'none';
+	}
+
+	refreshDisplay();
 }
 	
 
-async function refreshDocDisplay() {
+async function refreshDisplay() {
 	clearDisplay()
 
-	if (document.getElementById("userDisplay").style.display == 'flex') refreshFindAll();
-	if (document.getElementById("docDisplay").style.display == 'flex') refreshFindByRank();
+	if (document.getElementById("findAll").style.display == 'flex') refreshFindAll();
+	if (document.getElementById("findByRank").style.display == 'flex') refreshFindByRank();
 
 }
 
@@ -63,7 +73,7 @@ async function remove(id) {
 	})
 
 	if (response.ok) {
-		refreshDocDisplay()
+		refreshDisplay()
 	}
 
 }

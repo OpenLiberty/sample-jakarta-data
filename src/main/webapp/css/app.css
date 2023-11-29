@@ -174,7 +174,7 @@ button:hover {
     text-indent: 2pt;
 }
 
-#userCreation {
+#userCreation, #queryMenu {
 	background-color: white;
 	margin: 1em;
 	padding: .5em;
@@ -183,7 +183,7 @@ button:hover {
 	justify-content: space-between;
 }
 
-#docDisplay, #userDisplay {
+#findByRank, #findAll {
 	background-color: white;
 	margin: 1em;
 	padding: .5em;
