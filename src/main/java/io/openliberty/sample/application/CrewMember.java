@@ -15,7 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class CrewMember {
@@ -27,8 +27,8 @@ public class CrewMember {
 	private Rank rank;
 
 	@Id
-	@Pattern(regexp = "^\\d+$", message = "ID Number must be a non-negative integer!")
-	private String crewID; 
+	@Positive(message = "ID Number must be a non-negative integer!")
+	private int crewID; 
 
 	public String getName() {
 		return name;
@@ -46,11 +46,11 @@ public class CrewMember {
 		this.rank = rank;
 	}
 
-	public String getCrewID(){
+	public int getCrewID(){
 		return crewID;
 	}
 
-	public void setCrewID(String crewID) {
+	public void setCrewID(int crewID) {
 		this.crewID = crewID;
 	}
 

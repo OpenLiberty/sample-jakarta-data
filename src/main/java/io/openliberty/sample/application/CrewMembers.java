@@ -19,7 +19,7 @@ public interface CrewMembers extends DataRepository<CrewMember, String> {
     @OrderBy("name")
     Stream<CrewMember> findAll();
 
-    void deleteByCrewID(String crewID);
+    void deleteByCrewID(int crewID);
 
     void deleteAll();
 }

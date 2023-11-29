@@ -77,7 +77,7 @@ public class CrewServiceIT {
         //Check Get
         response = client.target(baseURL + "db/crew").request().get();
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
-        JsonObject expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", "75").add("Rank", "Captain").build();
+        JsonObject expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Captain").build();
         
         boolean found = false;
         for (JsonValue value : reader.readArray()) {
@@ -92,7 +92,7 @@ public class CrewServiceIT {
         //Confirm Delete
         response = client.target(baseURL + "db/crew").request().get();
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
-        expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", "75").add("Rank", "Captain").build();
+        expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Captain").build();
         
         found = false;
         for (JsonValue value : reader.readArray()) {
@@ -134,26 +134,26 @@ public class CrewServiceIT {
      */
     @Test
     public void testFindByRank() {
-        response = client.target(baseURL + "db/crew/it1").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Engineer\",\"crewID\":\"75\"}"));
+        response = client.target(baseURL + "db/crew/it1").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Engineer\",\"crewID\":75}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
-        response = client.target(baseURL + "db/crew/it2").request().post(Entity.json("{\"name\":\"Jim\",\"rank\":\"Captain\",\"crewID\":\"64\"}"));
+        response = client.target(baseURL + "db/crew/it2").request().post(Entity.json("{\"name\":\"Jim\",\"rank\":\"Captain\",\"crewID\":64}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
-        response = client.target(baseURL + "db/crew/it3").request().post(Entity.json("{\"name\":\"Alex\",\"rank\":\"Engineer\",\"crewID\":\"15\"}"));
+        response = client.target(baseURL + "db/crew/it3").request().post(Entity.json("{\"name\":\"Alex\",\"rank\":\"Engineer\",\"crewID\":15}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
 
         //Check findByRank("Captain")
         response = client.target(baseURL + "db/crew/rank/Captain").request().get();
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         JsonArray array = reader.readArray();
-        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", "64").build()).build();
+        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64).build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Engineer")
         response = client.target(baseURL + "db/crew/rank/Engineer").request().get();
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         array = reader.readArray();
-        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", "75").build())
-                                                 .add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", "15").build()).build();
+        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).build())
+                                                 .add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", 15).build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Officer")
