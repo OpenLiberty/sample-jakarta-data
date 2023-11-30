@@ -97,6 +97,20 @@ public class CrewService {
 		return crewMembersToJsonArray(page);
 	}
 
+		@GET
+	@Path("/shipSize/{shipSize}/rank/{rank}")
+	public String retrieveByShipSizeAndRank(@PathParam("shipSize") Ship.Size size, @PathParam("rank") String rank) {
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		for (CrewMember c : crewMembers.findByShipSizeAndRank(size, Rank.fromString(rank))) {	
+			JsonObject json = Json.createObjectBuilder()
+								.add("Name", c.getName())
+								.add("CrewID", c.getCrewID())
+								.add("Ship", c.getShip().name).build();
+			jab.add(json);
+		}
+		return jab.build().toString();
+	}
+
 	@DELETE
 	public void remove() {
 		crewMembers.deleteAll();

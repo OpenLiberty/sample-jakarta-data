@@ -66,7 +66,13 @@ async function refreshDisplay() {
 
 	if (document.getElementById("findAll").style.display == 'flex') refreshFindAll();
 	if (document.getElementById("findByRank").style.display == 'flex') refreshFindByRank();
-
+	if (document.getElementById("findByShipSizeAndRank").style.display == 'flex') {
+		var shipSizeSelector = document.getElementById("shipSizeSelector");
+		var shipSize = shipSizeSelector.options[shipSizeSelector.selectedIndex].text;
+		var rankSelector = document.getElementById("rankSelector");
+		var rank = rankSelector.options[rankSelector.selectedIndex].text;		
+		refreshFindByShipSizeAndRank(shipSize, rank);
+	}
 }
 
 function clearDisplay(){

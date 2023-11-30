@@ -19,6 +19,8 @@ public interface CrewMembers extends DataRepository<CrewMember, Integer> {
     List<CrewMember> findByRank(Rank rank);
 
     Page<CrewMember> findByRank(Rank rank, Pageable pageRequest);
+    
+    List<CrewMember> findByShipSizeAndRank(Ship.Size size, Rank rank);
 
     @OrderBy("name")
     Stream<CrewMember> findAll();

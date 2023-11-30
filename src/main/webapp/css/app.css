@@ -189,7 +189,7 @@ button:hover {
 	justify-content: space-between;
 }
 
-#findByRank, #findAll {
+.queryContainer {
 	background-color: white;
 	margin: 1em;
 	padding: .5em;
