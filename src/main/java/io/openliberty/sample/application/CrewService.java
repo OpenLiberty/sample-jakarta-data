@@ -80,7 +80,8 @@ public class CrewService {
 		for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank))) {	
 			JsonObject json = Json.createObjectBuilder()
 								.add("Name", c.getName())
-								.add("CrewID", c.getCrewID()).build();
+								.add("CrewID", c.getCrewID())
+								.add("Ship", c.getShip().name).build();
 			jab.add(json);
 		}
 		return jab.build().toString();
