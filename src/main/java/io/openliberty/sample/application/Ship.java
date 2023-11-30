@@ -1,18 +1,16 @@
 package io.openliberty.sample.application;
 
-import java.io.Serializable;
-
 import jakarta.json.bind.annotation.JsonbTypeDeserializer;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 @JsonbTypeDeserializer(ShipDeserializer.class)
-public class Ship implements Serializable {
+public class Ship {
     public static enum Size {
         small, large
     }
 
-    public String name;
+    public String shipName;
 
     public Size size;
 
@@ -21,7 +19,7 @@ public class Ship implements Serializable {
     }
 
     Ship(String name, Size size) {
-        this.name = name;
+        this.shipName = name;
         this.size = size;
     }
 

@@ -37,7 +37,7 @@ public class CrewMember {
  
 
 	public String toString() {
-		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank + ship.name != null ? "<br>Ship: " + ship.name : "";
+		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank + ship.shipName != null ? "<br>Ship: " + ship.shipName : "";
 
 	}
 
