@@ -65,7 +65,8 @@ public class CrewService {
 			JsonObject json = Json.createObjectBuilder()
 								.add("Name", c.getName())
 								.add("CrewID", c.getCrewID())
-								.add("Rank",c.getRank().toString()).build();
+								.add("Rank",c.getRank().toString())
+								.add("Ship", c.getShip().name).build();
 			jab.add(json);
 
 	  	});
