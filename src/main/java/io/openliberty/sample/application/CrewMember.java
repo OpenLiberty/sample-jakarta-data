@@ -30,6 +30,9 @@ public class CrewMember {
 	@Positive(message = "ID Number must be a non-negative integer!")
 	private int crewID; 
 
+	@NotNull(message = "Crew member must be assigned to one of the listed ships!")
+	private Ship ship;
+
 	public String getName() {
 		return name;
 	}
@@ -54,8 +57,16 @@ public class CrewMember {
 		this.crewID = crewID;
 	}
 
+	public Ship getShip() {
+		return ship;
+	}
+
+	public void setShip(Ship ship) {
+		this.ship = ship;
+	}
+
 	public String toString() {
-		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank;
+		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank + ship.name != null ? "<br>Ship: " + ship.name : "";
 
 	}
 
