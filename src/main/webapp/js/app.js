@@ -51,6 +51,12 @@ function setActiveQuery(query) {
 		else nodes.item(i).style.display = 'none';
 	}
 
+	var buttons = document.querySelectorAll('.queryButton');
+	for (var i = 0; i < buttons.length; i++) {
+		if (buttons.item(i).id == query + 'Button') buttons.item(i).classList.add("selectedQuery");
+		else buttons.item(i).classList.remove("selectedQuery");
+	}
+
 	refreshDisplay();
 }
 	
