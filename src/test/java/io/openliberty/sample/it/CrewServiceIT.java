@@ -71,13 +71,13 @@ public class CrewServiceIT {
         assertEquals(204, response.getStatus(), "output: " + response.readEntity(String.class));     
 
         //Check Add
-        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\",\"ship\":\"Liberty Saucer\"}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
 
         //Check Get
         response = client.target(baseURL + "db/crew").request().get();
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
-        JsonObject expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Captain").build();
+        JsonObject expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Captain").add("Ship", "Liberty Saucer").build();
         
         boolean found = false;
         for (JsonValue value : reader.readArray()) {
@@ -92,7 +92,7 @@ public class CrewServiceIT {
         //Confirm Delete
         response = client.target(baseURL + "db/crew").request().get();
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
-        expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Captain").build();
+        expectedObject = Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Captain").add("Ship", "Liberty Saucer").build();
         
         found = false;
         for (JsonValue value : reader.readArray()) {
@@ -104,7 +104,7 @@ public class CrewServiceIT {
     @Test
     public void testValidationCrewMember() {
         //Name Validation
-        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"\",\"rank\":\"Captain\",\"crewID\":\"75\",\"ship\":\"Liberty Saucer\"}"));
 
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         JsonArray array = reader.readArray();
@@ -112,7 +112,7 @@ public class CrewServiceIT {
         assertEquals("\"All crew members must have a name!\"", array.get(0).toString());   
         
         //Rank Validation
-        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Scientist\",\"crewID\":\"75\"}"));
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Scientist\",\"crewID\":\"75\",\"ship\":\"Liberty Saucer\"}"));
 
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         array = reader.readArray();
@@ -120,12 +120,21 @@ public class CrewServiceIT {
         assertEquals("\"Crew member must be one of the listed ranks!\"", array.get(0).toString());    
 
         //CrewID Validation
-        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"-1\"}"));
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"-1\",\"ship\":\"Liberty Saucer\"}"));
 
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         array = reader.readArray();
         assertEquals(1, array.size(), "Validation array should have only contained 1 message");
         assertEquals("\"ID Number must be a non-negative integer!\"", array.get(0).toString());    
+
+        //Ship Validation
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\",\"ship\":\"Quarkus Speedboat\"}"));
+
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        array = reader.readArray();
+        assertEquals(1, array.size(), "Validation array should have only contained 1 message");
+        assertEquals("\"Crew member must be assigned to one of the listed ships!\"", array.get(0).toString());    
+
 
     }
 
@@ -134,26 +143,26 @@ public class CrewServiceIT {
      */
     @Test
     public void testFindByRank() {
-        response = client.target(baseURL + "db/crew/it1").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Engineer\",\"crewID\":75}"));
+        response = client.target(baseURL + "db/crew/it1").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Engineer\",\"crewID\":75,\"ship\":\"Liberty Saucer\"}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
-        response = client.target(baseURL + "db/crew/it2").request().post(Entity.json("{\"name\":\"Jim\",\"rank\":\"Captain\",\"crewID\":64}"));
+        response = client.target(baseURL + "db/crew/it2").request().post(Entity.json("{\"name\":\"Jim\",\"rank\":\"Captain\",\"crewID\":64,\"ship\":\"Liberty Saucer\"}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
-        response = client.target(baseURL + "db/crew/it3").request().post(Entity.json("{\"name\":\"Alex\",\"rank\":\"Engineer\",\"crewID\":15}"));
+        response = client.target(baseURL + "db/crew/it3").request().post(Entity.json("{\"name\":\"Alex\",\"rank\":\"Engineer\",\"crewID\":15,\"ship\":\"Jakarta Sailboat\"}"));
         assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
 
         //Check findByRank("Captain")
         response = client.target(baseURL + "db/crew/rank/Captain").request().get();
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         JsonArray array = reader.readArray();
-        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64).add("Rank", "Captain").build()).build();
+        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64.add("Rank", "Captain").add("Ship", "Liberty Saucer")).build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Engineer")
         response = client.target(baseURL + "db/crew/rank/Engineer").request().get();
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         array = reader.readArray();
-        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Engineer").build())
-                                                 .add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", 15).add("Rank", "Engineer").build()).build();
+        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Engineer").add("Ship", "Liberty Saucer").build())
+                                                 .add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", 15).add("Rank", "Engineer").add("Ship", "Jakarta Sailboat").build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Officer")
