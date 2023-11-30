@@ -11,7 +11,8 @@ public class RankDeserializer implements JsonbDeserializer<Rank> {
 
     @Override
     public Rank deserialize(JsonParser parser, DeserializationContext ctx, Type rtType) {
-        return Rank.fromString(parser.getString());
+        String name = parser.getValue().toString().replaceAll("\"", "");
+        return Rank.fromString(name);
     }
     
 }

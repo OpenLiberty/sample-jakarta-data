@@ -35,8 +35,7 @@ async function parseFindByRank(rank, response) {
 
 function addToCrewMembersByRank(entry, rank) {
 	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
-					"<div>ID: " + entry.CrewID + "</div>" +
-                    "<div>Ship: " + entry.Ship + "</div>";
+					"<div>ID: " + entry.CrewID + "</div>";
 					
 	var userDiv = document.createElement("div");
 	userDiv.setAttribute("class","user flexbox");

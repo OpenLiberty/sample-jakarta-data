@@ -16,7 +16,6 @@ async function addCrewMember() {
 	var rank = document.getElementById("crewMemberRank");
 	crewMember.rank = rank.options[rank.selectedIndex].text;
 	crewMember.crewID = document.getElementById("crewMemberID").value;
-	crewMember.ship = document.getElementById("crewMemberShip").value
 
 	
 	const response = await fetch("db/crew/"+crewMember.crewID, {

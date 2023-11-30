@@ -21,8 +21,7 @@ async function refreshFindAll() {
 function addToCrewMembers(entry){
 	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
 					"<div>ID: " + entry.CrewID + "</div>" +
-					"<div>Rank: " + entry.Rank + "</div>" +
-                    "<div>Ship: " + entry.Ship + "</div>";
+					"<div>Rank: " + entry.Rank + "</div>";
 					
 	var userDiv = document.createElement("div");
 	userDiv.setAttribute("class","user flexbox");
