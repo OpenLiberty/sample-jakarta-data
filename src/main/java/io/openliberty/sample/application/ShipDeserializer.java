@@ -11,12 +11,11 @@ public class ShipDeserializer implements JsonbDeserializer<Ship> {
     @Override
     public Ship deserialize(JsonParser parser, DeserializationContext ctx, Type rtType) {
         String shipName = parser.getString();
-        System.out.println("Ship: " + shipName);
         if (shipName.equals("Liberty Saucer")) {
             return new Ship(shipName, Ship.Size.small);
         } else if (shipName.equals("Jakarta Sailboat")) {
             return new Ship(shipName, Ship.Size.small);
-        } else if (shipName.equals("Sphere-class Web Ship")) {
+        } else if (shipName.equals("WebSphere Battleship")) {
             return new Ship(shipName, Ship.Size.large);
         } else {
             return null;

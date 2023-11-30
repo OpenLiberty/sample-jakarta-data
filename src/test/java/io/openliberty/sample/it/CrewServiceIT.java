@@ -127,6 +127,15 @@ public class CrewServiceIT {
         assertEquals(1, array.size(), "Validation array should have only contained 1 message");
         assertEquals("\"ID Number must be a non-negative integer!\"", array.get(0).toString());    
 
+        //Ship Validation
+        response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\",\"ship\":\"Quarkus Speedboat\"}"));
+
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        array = reader.readArray();
+        assertEquals(1, array.size(), "Validation array should have only contained 1 message");
+        assertEquals("\"Crew member must be assigned to one of the listed ships!\"", array.get(0).toString());    
+
+
     }
 
     /**
