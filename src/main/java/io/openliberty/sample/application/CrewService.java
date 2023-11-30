@@ -97,7 +97,7 @@ public class CrewService {
 		return crewMembersToJsonArray(page);
 	}
 
-		@GET
+	@GET
 	@Path("/shipSize/{shipSize}/rank/{rank}")
 	public String retrieveByShipSizeAndRank(@PathParam("shipSize") Ship.Size size, @PathParam("rank") String rank) {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
