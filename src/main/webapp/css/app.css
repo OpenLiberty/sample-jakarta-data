@@ -103,6 +103,12 @@ button {
     margin-bottom: 25px;
 }
 
+.selectedQuery {
+    border-style: solid;
+    border-color: #d1b955;
+    border-width: .2em;
+}
+
 button:hover {
     background-color: #C7EE63;
 }
