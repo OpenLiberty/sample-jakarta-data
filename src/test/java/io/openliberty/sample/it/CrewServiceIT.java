@@ -145,15 +145,15 @@ public class CrewServiceIT {
         response = client.target(baseURL + "db/crew/rank/Captain").request().get();
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         JsonArray array = reader.readArray();
-        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64).build()).build();
+        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64).add("Rank", "Captain").build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Engineer")
         response = client.target(baseURL + "db/crew/rank/Engineer").request().get();
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         array = reader.readArray();
-        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).build())
-                                                 .add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", 15).build()).build();
+        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Rank", "Engineer").build())
+                                                 .add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", 15).add("Rank", "Engineer").build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Officer")
