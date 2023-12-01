@@ -64,6 +64,7 @@ public class CrewService {
 	}
 
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public String retrieve() {
 
 		Iterable<CrewMember> crewMembersIterable = crewMembers.findAll()::iterator;
@@ -73,6 +74,7 @@ public class CrewService {
 
 	@GET
 	@Path("/rank/{rank}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String retrieveByRank(@PathParam("rank") String rank) {
 		
 		List<CrewMember> crewMembersList = crewMembers.findByRank(Rank.fromString(rank));
@@ -82,6 +84,7 @@ public class CrewService {
 
 	@GET
 	@Path("/rank/{rank}/page/{pageNum}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String retrieveByRank(@PathParam("rank") String rank,
 								 @PathParam("pageNum") long pageNum) {
 
@@ -89,9 +92,9 @@ public class CrewService {
 									   .page(pageNum)
 									   .sortBy(Sort.asc("name"), Sort.asc("id"));
 
-		Page<CrewMember> crewMembersPage = crewMembers.findByRank(Rank.fromString(rank), pageRequest);
+		Page<CrewMember> page = crewMembers.findByRank(Rank.fromString(rank), pageRequest);
 
-		return crewMembersToJsonArray(crewMembersPage);	
+		return crewMembersToJsonArray(page);
 	}
 
 	@DELETE
