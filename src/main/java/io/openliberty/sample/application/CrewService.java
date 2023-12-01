@@ -10,6 +10,8 @@
 *******************************************************************************/
 package io.openliberty.sample.application;
 
+import java.util.List;
+
 import jakarta.data.Sort;
 import jakarta.data.page.Page;
 import jakarta.data.page.Pageable;
@@ -63,52 +65,50 @@ public class CrewService {
 
 	@GET
 	public String retrieve() {
-		JsonArrayBuilder jab = Json.createArrayBuilder();
-		crewMembers.findAll().forEach( c -> {
-			JsonObject json = Json.createObjectBuilder()
-								.add("Name", c.name)
-								.add("CrewID", c.crewID)
-								.add("Rank",c.rank.toString()).build();
-			jab.add(json);
 
-	  	});
-		return jab.build().toString();
+		Iterable<CrewMember> crewMembersIterable = crewMembers.findAll()::iterator;
+		
+		return crewMembersToJsonArray(crewMembersIterable);
 	}
 
 	@GET
 	@Path("/rank/{rank}")
 	public String retrieveByRank(@PathParam("rank") String rank) {
-		JsonArrayBuilder jab = Json.createArrayBuilder();
-		for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank))) {	
-			JsonObject json = Json.createObjectBuilder()
-								.add("Name", c.name)
-								.add("CrewID", c.crewID).build();
-			jab.add(json);
-		}
-		return jab.build().toString();
+		
+		List<CrewMember> crewMembersList = crewMembers.findByRank(Rank.fromString(rank));
+
+		return crewMembersToJsonArray(crewMembersList);
 	}
 
 	@GET
 	@Path("/rank/{rank}/page/{pageNum}")
 	public String retrieveByRank(@PathParam("rank") String rank,
 								 @PathParam("pageNum") long pageNum) {
-		JsonArrayBuilder jab = Json.createArrayBuilder();
 
 		Pageable pageRequest = Pageable.ofSize(5)
 									   .page(pageNum)
 									   .sortBy(Sort.asc("name"), Sort.asc("id"));
 
-		for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank), pageRequest)) {
-			JsonObject json = Json.createObjectBuilder()
-								.add("Name", c.name)
-								.add("CrewID", c.crewID).build();
-			jab.add(json);
-		}
-		return jab.build().toString();
+		Page<CrewMember> crewMembersPage = crewMembers.findByRank(Rank.fromString(rank), pageRequest);
+
+		return crewMembersToJsonArray(crewMembersPage);	
 	}
 
 	@DELETE
 	public void remove() {
 		crewMembers.deleteAll();
+	}
+
+	private String crewMembersToJsonArray(Iterable<CrewMember> crewMembers) {
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		for (CrewMember c : crewMembers) {
+			JsonObject json = Json.createObjectBuilder()
+								.add("Name", c.name)
+								.add("CrewID", c.crewID)
+								.add("Rank",c.rank.toString()).build();
+			jab.add(json);
+		}
+		return jab.build().toString();
+
 	}
 }
