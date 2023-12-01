@@ -238,3 +238,7 @@ button:hover {
 strong {
     font-size: 16pt;
 }
+
+#queryButtons, #userCreationForm {
+    flex: 1;
+}

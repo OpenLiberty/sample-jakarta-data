@@ -37,28 +37,32 @@
 			<div id="usersContainer" class="hFlexContainer">
 				<div id="userCreation" class="vFlexContainer">
 					<strong id="createCrewMember" class="flexSelfCenter">Register Crew Member<br>CrewMembers.save()</strong>
-					<div id="Name" class="vFlexContainer inputLine">
-						<span>Name</span>
-						<input id="crewMemberName" class="textBox" type="text">
+					<div id="userCreationForm" class="vFlexContainer">
+						<div id="Name" class="vFlexContainer inputLine">
+							<span>Name</span>
+							<input id="crewMemberName" class="textBox" type="text">
+						</div>
+						<div id="ID" class="vFlexContainer inputLine">
+							<span>ID Number</span>
+							<input id="crewMemberID" class="textBox" type="text">
+						</div>
+						<div id="Rank" class="vFlexContainer inputLine">
+							<span>Rank</span>
+							<select id="crewMemberRank">
+									<option>Captain</option>
+									<option>Officer</option>
+									<option>Engineer</option>
+							</select>
+						</div>
+						<button id="registerButton" class="buttons" onclick="addCrewMember()">Register Crew Member</button>
 					</div>
-					<div id="ID" class="vFlexContainer inputLine">
-						<span>ID Number</span>
-						<input id="crewMemberID" class="textBox" type="text">
-					</div>
-					<div id="Rank" class="vFlexContainer inputLine">
-						<span>Rank</span>
-						<select id="crewMemberRank">
-								<option>Captain</option>
-								<option>Officer</option>
-								<option>Engineer</option>
-						</select>
-					</div>
-					<button id="registerButton" class="buttons" onclick="addCrewMember()">Register Crew Member</button>
 				</div>
 				<div id="queryMenu" class="vFlexContainer">
-					<strong id="createCrewMember" class="flexSelfCenter">Queries</strong>
-					<button id="findAllButton" class="buttons queryButton selectedQuery" onclick="setActiveQuery('findAll')">findAll</button>
-					<button id="findByRankButton" class="buttons queryButton" onclick="setActiveQuery('findByRank')">findByRank</button>
+					<strong id="createCrewMember" class="flexSelfCenter">Queries<br>&nbsp;</strong>
+					<div id="queryButtons" class="vFlexContainer">
+						<button id="findAllButton" class="buttons queryButton selectedQuery" onclick="setActiveQuery('findAll')">findAll</button>
+						<button id="findByRankButton" class="buttons queryButton" onclick="setActiveQuery('findByRank')">findByRank</button>
+					</div>
 				</div>
 				<div id="findAll" class="vFlexContainer queryContainer" style="display: flex">
 					<strong id="createCrewMember" class="flexSelfCenter">Crew Members<br>CrewMembers.findAll()</strong>
