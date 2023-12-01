@@ -185,7 +185,7 @@ button:hover {
 	margin: 1em;
 	padding: .5em;
 	border-radius: 7pt;
-	width: 12em;
+	width: 15em;
 	justify-content: space-between;
 }
 
@@ -211,6 +211,15 @@ button:hover {
 #userBoxes {
 	flex-wrap: wrap;
 	justify-content: space-evenly;
+    
+}
+
+#rankBoxes {
+    padding-top: 1em;
+    text-align: center;
+    font-size: 18pt;
+    white-space: nowrap;
+
 }
 
 #usersContainer{
@@ -222,5 +231,14 @@ button:hover {
 	margin: .5em;
 	padding: .25em;
 	border-radius: 7pt;
+    text-align: left;
+    font-size: 12pt;
 }
 
+strong {
+    font-size: 16pt;
+}
+
+#queryButtons, #userCreationForm {
+    flex: 1;
+}
