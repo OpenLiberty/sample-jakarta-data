@@ -66,9 +66,9 @@ public class CrewService {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		crewMembers.findAll().forEach( c -> {
 			JsonObject json = Json.createObjectBuilder()
-								.add("Name", c.getName())
-								.add("CrewID", c.getCrewID())
-								.add("Rank",c.getRank().toString()).build();
+								.add("Name", c.name)
+								.add("CrewID", c.crewID)
+								.add("Rank",c.rank.toString()).build();
 			jab.add(json);
 
 	  	});
@@ -81,8 +81,8 @@ public class CrewService {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank))) {	
 			JsonObject json = Json.createObjectBuilder()
-								.add("Name", c.getName())
-								.add("CrewID", c.getCrewID()).build();
+								.add("Name", c.name)
+								.add("CrewID", c.crewID).build();
 			jab.add(json);
 		}
 		return jab.build().toString();
@@ -100,8 +100,8 @@ public class CrewService {
 
 		for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank), pageRequest)) {
 			JsonObject json = Json.createObjectBuilder()
-								.add("Name", c.getName())
-								.add("CrewID", c.getCrewID()).build();
+								.add("Name", c.name)
+								.add("CrewID", c.crewID).build();
 			jab.add(json);
 		}
 		return jab.build().toString();

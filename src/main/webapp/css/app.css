@@ -201,6 +201,7 @@ button:hover {
 	max-width: 35%;
 	border: 1px solid transparent;
 	padding-right: 20px; /*Scroll bar space*/
+    overflow-x: clip;
 }
 
 .inputLine {
