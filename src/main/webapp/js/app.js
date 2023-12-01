@@ -38,7 +38,7 @@ async function addCrewMember() {
 		}
 	} else {
 		const body = await response.text();
-		if (body.includes("Unable to deserialize property 'crewID'"))
+		if (body.includes("Unable to deserialize property 'crewID'") || response.status == 405)
 			toast("ID Number must be a non-negative integer!",0)
 	}
 }
