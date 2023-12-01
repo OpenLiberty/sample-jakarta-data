@@ -21,38 +21,14 @@ import jakarta.validation.constraints.Positive;
 public class CrewMember {
 
 	@NotEmpty(message = "All crew members must have a name!")
-	private String name;
+	public String name;
 
 	@NotNull(message = "Crew member must be one of the listed ranks!")
-	private Rank rank;
+	public Rank rank;
 
 	@Id
 	@Positive(message = "ID Number must be a non-negative integer!")
-	private int crewID; 
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Rank getRank() {
-		return rank;
-	}
-
-	public void setRank(Rank rank) {
-		this.rank = rank;
-	}
-
-	public int getCrewID(){
-		return crewID;
-	}
-
-	public void setCrewID(int crewID) {
-		this.crewID = crewID;
-	}
+	public int crewID; 
 
 	public String toString() {
 		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank;
