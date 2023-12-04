@@ -29,12 +29,13 @@ Once the server has started, the application is availible at http://localhost:90
 ### Try it out
 Give the sample a try by registering a crew member. Enter a name (a **String**), an ID Number (an **Integer**), and select a Rank from the menu, then click 'Register Crew Member'.
 
-Two more boxes will appear, one with all of your crew members (which you can click to remove) and one showing your crew members sorted by rank.
+The new crew member will appear in the **Crew Members** box. Continue to add crew members, choosing a variety of ranks for the crew members. In the Queries box, click the findByRank button. The crew members will appear in a **Crew Members by Rank** box, sorted into columns by rank.
 
 ### How it works
-This application provides a few REST endpoints to demonstrate some of the capabilities of Jakarta Data. By defining a Jakarta Persistence **Entity** class ([CrewMember](src/main/java/io/openliberty/sample/application/CrewMember.java)) you extend the Jakarta Data **DataRepository** interface ([CrewMembers](src/main/java/io/openliberty/sample/application/CrewMembers.java)) with query methods and apply the **Repository** annotation. When the **Repository** is injected into another object using CDI, Jakarta Data will provide an implementation of the interface, including implementations of the query methods, as shown in [CrewService](src/main/java/io/openliberty/sample/application/CrewService.java)
+This application provides a few REST endpoints to demonstrate some of the capabilities of Jakarta Data. 
+There are two classes which are used for Jakarta Data, a Jakarta Persistence Entity ([CrewMember](src/main/java/io/openliberty/sample/application/CrewMember.java)) and a Jakarta Data Repository ([CrewMembers](src/main/java/io/openliberty/sample/application/CrewMembers.java)). **CrewMembers** is annotated with `@Repository` and extends the Jakarta Data **DataRepository** interface, adding save, delete, and query methods. When the repository is injected into another object using CDI, Jakarta Data will provide an implementation of the interface, including implementations of the save, delete, and query methods.
 
-We can start by injecting the **Repository** in our application using CDI
+The **CrewMembers** repository is injected into the REST application using CDI
 
 ```java
 public class CrewService {
@@ -47,39 +48,35 @@ The first endpoint persists a **CrewMember** in the database by calling `crewMem
 
 ```java
 public String add(CrewMember crewMember) {
-    
-    //...
-    //Jakarta Validation
-    //...
-
     crewMembers.save(crewMember);
+
+    //Jakarta Validation[...]
+
 ```
 
 To remove an individual **CrewMember** from the database based on the ID, you can use `crewMembers.deleteByCrewID`
 ```java
-public String remove(@PathParam("id") String id) {
+public void remove(@PathParam("id") int id) {
     crewMembers.deleteByCrewID(id);
 ```
 
 In order to display all of our **CrewMember**s, you can get all of them easily by calling `crewMembers.findAll()`
 ```java
 public String retrieve() {
-    JsonArrayBuilder jab = Json.createArrayBuilder();
-    for (CrewMember c : crewMembers.findAll()) {	
+    Iterable<CrewMember> crewMembersIterable = crewMembers.findAll()::iterator;
 ```
 In the `CrewMembers.java` file we can see that these will be returned sorted alphabetically, using `@OrderBy("name")`
 ```java
 public interface CrewMembers {
-//...
+//[...]
 @OrderBy("name")
-List<CrewMember> findAll();
+Stream<CrewMember> findAll();
 ```
 
-Finally, for a slightly more complex operation, we can ask for a subset of the **CrewMember**s with a given **Rank**, using `crewMembers.findByRank()`
+Finally, for a slightly more complex operation, we can ask for a subset of the crew members with a given **Rank**, using `crewMembers.findByRank()`
 ```java
 public String retrieveByRank(@PathParam("rank") String rank) {
-    JsonArrayBuilder jab = Json.createArrayBuilder();
-	for (CrewMember c : crewMembers.findByRank(Rank.fromString(rank))) {
+    List<CrewMember> crewMembersList = crewMembers.findByRank(Rank.fromString(rank));
 ```
 
 ### Data Source configuration
