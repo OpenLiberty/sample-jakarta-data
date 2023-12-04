@@ -48,12 +48,9 @@ The first endpoint persists a **CrewMember** in the database by calling `crewMem
 
 ```java
 public String add(CrewMember crewMember) {
-    
-    public String add(CrewMember crewMember) {
+    crewMembers.save(crewMember);
 
-        crewMembers.save(crewMember);
-
-        //Jakarta Validation[...]
+    //Jakarta Validation[...]
 
 ```
 
