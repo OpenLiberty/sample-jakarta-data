@@ -222,7 +222,7 @@ button:hover {
 
 }
 
-#usersContainer{
+#usersContainer, #rankBoxes {
 	flex-wrap: wrap;
 }
 
