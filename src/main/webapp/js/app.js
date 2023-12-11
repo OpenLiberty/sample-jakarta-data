@@ -76,7 +76,7 @@ async function refreshDisplay() {
 }
 
 function clearDisplay(){
-	var elements = ["userBoxes", "Captain", "Engineer", "Officer"];
+	var elements = ["userBoxes", "Captain", "Engineer", "Officer", "shipAndRankBoxes"]; //TODO this should use a .class
 	for (let i = 0; i < elements.length; i++) {
 		var usersDiv = document.getElementById(elements[i]);
 		while (usersDiv.firstChild) {

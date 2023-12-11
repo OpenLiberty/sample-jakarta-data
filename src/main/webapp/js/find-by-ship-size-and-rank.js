@@ -12,4 +12,21 @@
 async function refreshFindByShipSizeAndRank(shipSize, rank) {
     response = await fetch("db/crew/shipSize/" +shipSize+"/rank/" +rank);
 	
+    if (response.ok) {
+		const doc = await response.json();
+		doc.forEach(addToCrewMembersFindByShipSizeAndRank);
+	}
+}
+
+function addToCrewMembersFindByShipSizeAndRank(entry){
+	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
+					"<div>ID: " + entry.CrewID + "</div>" +
+                    "<div>Ship: " + entry.Ship + "</div>";
+					
+	var userDiv = document.createElement("div");
+	userDiv.setAttribute("class","user flexbox");
+	userDiv.setAttribute("id",entry.CrewID);
+	userDiv.setAttribute("onclick","remove('"+entry.CrewID+"')");
+	userDiv.innerHTML=userHtml;
+	document.getElementById("shipAndRankBoxes").appendChild(userDiv);
 }

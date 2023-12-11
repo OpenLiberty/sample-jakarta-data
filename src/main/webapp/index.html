@@ -91,16 +91,17 @@
 				<div id="findByShipSizeAndRank" class="flexBox vFlexContainer queryContainer">
 					<strong id="createCrewMember" class="flexSelfCenter">Crew Members by Ship Size and Rank<br>CrewMembers.findByShipSizeAndRank()</strong>
 					<div id="findByShipSizeAndRankSelectors" class="hFlexContainer">
-						<select id="shipSizeSelector">
+						<select id="shipSizeSelector" onchange="refreshDisplay()">
 							<option>small</option>
 							<option>large</option>
 						</select>
-						<select id="rankSelector">
+						<select id="rankSelector" onchange="refreshDisplay()">
 							<option>Captain</option>
 							<option>Officer</option>
 							<option>Engineer</option>
 						</select>
 					</div>
+					<div id="shipAndRankBoxes" class="flexBox hFlexContainer"></div>
 				</div>
 			</div>
         </section>
