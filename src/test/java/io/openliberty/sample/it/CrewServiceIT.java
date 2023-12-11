@@ -154,7 +154,7 @@ public class CrewServiceIT {
         response = client.target(baseURL + "db/crew/rank/Captain").request().get();
         JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
         JsonArray array = reader.readArray();
-        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64.add("Rank", "Captain").add("Ship", "Liberty Saucer")).build()).build();
+        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64).add("Rank", "Captain").add("Ship", "Liberty Saucer").build()).build();
         assertEquals(expectedArray, array);
 
         //Check findByRank("Engineer")
