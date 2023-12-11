@@ -20,6 +20,7 @@
 		<title>Jakarta Data Sample</title>
 		<script type="text/javascript" src="js/find-all.js"></script>
 		<script type="text/javascript" src="js/find-by-rank.js"></script>
+		<script type="text/javascript" src="js/find-by-ship-size-and-rank.js"></script>		
 		<script type="text/javascript" src="js/app.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
 		<link rel="stylesheet" href="css/app.css">
@@ -54,6 +55,14 @@
 									<option>Engineer</option>
 							</select>
 						</div>
+						<div id="Ship" class="vFlexContainer inputLine">
+							<span>Ship Assignment</span>
+							<select id="crewMemberShip">
+									<option>Liberty Saucer</option>
+									<option>Jakarta Sailboat</option>
+									<option>WebSphere Battleship</option>
+							</select>
+						</div>
 						<button id="registerButton" class="buttons" onclick="addCrewMember()">Register Crew Member</button>
 					</div>
 				</div>
@@ -62,6 +71,7 @@
 					<div id="queryButtons" class="vFlexContainer">
 						<button id="findAllButton" class="buttons queryButton selectedQuery" onclick="setActiveQuery('findAll')">findAll</button>
 						<button id="findByRankButton" class="buttons queryButton" onclick="setActiveQuery('findByRank')">findByRank</button>
+						<button id="findByShipSizeAndRankButton" class="buttons queryButton" onclick="setActiveQuery('findByShipSizeAndRank')">findByShipSizeAndRank</button>
 					</div>
 				</div>
 				<div id="findAll" class="vFlexContainer queryContainer" style="display: flex">
@@ -77,6 +87,21 @@
 						<div id="Officer" class="flexBox"></div>
 						<div id="Engineer" class="flexBox"></div>
 					</div>
+				</div>
+				<div id="findByShipSizeAndRank" class="flexBox vFlexContainer queryContainer">
+					<strong id="createCrewMember" class="flexSelfCenter">Crew Members by Ship Size and Rank<br>CrewMembers.findByShipSizeAndRank()</strong>
+					<div id="findByShipSizeAndRankSelectors" class="hFlexContainer">
+						<select id="shipSizeSelector" onchange="refreshDisplay()">
+							<option>small</option>
+							<option>large</option>
+						</select>
+						<select id="rankSelector" onchange="refreshDisplay()">
+							<option>Captain</option>
+							<option>Officer</option>
+							<option>Engineer</option>
+						</select>
+					</div>
+					<div id="shipAndRankBoxes" class="flexBox hFlexContainer"></div>
 				</div>
 			</div>
         </section>

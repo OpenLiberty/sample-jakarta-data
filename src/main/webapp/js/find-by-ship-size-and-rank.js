@@ -9,19 +9,18 @@
 *     IBM Corporation - initial API and implementation
 *******************************************************************************/
 
-async function refreshFindAll() {
-	response = await fetch("db/crew/");
-
-	if (response.ok) {
+async function refreshFindByShipSizeAndRank(shipSize, rank) {
+    response = await fetch("db/crew/shipSize/" +shipSize+"/rank/" +rank);
+	
+    if (response.ok) {
 		const doc = await response.json();
-		doc.forEach(addToCrewMembers);
+		doc.forEach(addToCrewMembersFindByShipSizeAndRank);
 	}
 }
 
-function addToCrewMembers(entry){
+function addToCrewMembersFindByShipSizeAndRank(entry){
 	var userHtml =	"<div>Name: " + entry.Name + "</div>" +
 					"<div>ID: " + entry.CrewID + "</div>" +
-					"<div>Rank: " + entry.Rank + "</div>" +
                     "<div>Ship: " + entry.Ship + "</div>";
 					
 	var userDiv = document.createElement("div");
@@ -29,5 +28,5 @@ function addToCrewMembers(entry){
 	userDiv.setAttribute("id",entry.CrewID);
 	userDiv.setAttribute("onclick","remove('"+entry.CrewID+"')");
 	userDiv.innerHTML=userHtml;
-	document.getElementById("userBoxes").appendChild(userDiv);
+	document.getElementById("shipAndRankBoxes").appendChild(userDiv);
 }

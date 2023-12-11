@@ -11,6 +11,7 @@
 package io.openliberty.sample.application;
 
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
@@ -30,8 +31,13 @@ public class CrewMember {
 	@Positive(message = "ID Number must be a non-negative integer!")
 	public int crewID; 
 
+	@Embedded
+	@NotNull(message = "Crew member must be assigned to one of the listed ships!")
+	public Ship ship;
+ 
+
 	public String toString() {
-		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank;
+		return "Name: " + name + "<br>CrewID: " + crewID + "<br>Rank: " + rank + ship.shipName != null ? "<br>Ship: " + ship.shipName : "";
 
 	}
 

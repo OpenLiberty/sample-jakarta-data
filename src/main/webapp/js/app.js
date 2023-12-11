@@ -16,6 +16,7 @@ async function addCrewMember() {
 	var rank = document.getElementById("crewMemberRank");
 	crewMember.rank = rank.options[rank.selectedIndex].text;
 	crewMember.crewID = document.getElementById("crewMemberID").value;
+	crewMember.ship = document.getElementById("crewMemberShip").value
 
 	
 	const response = await fetch("db/crew/"+crewMember.crewID, {
@@ -65,11 +66,17 @@ async function refreshDisplay() {
 
 	if (document.getElementById("findAll").style.display == 'flex') refreshFindAll();
 	if (document.getElementById("findByRank").style.display == 'flex') refreshFindByRank();
-
+	if (document.getElementById("findByShipSizeAndRank").style.display == 'flex') {
+		var shipSizeSelector = document.getElementById("shipSizeSelector");
+		var shipSize = shipSizeSelector.options[shipSizeSelector.selectedIndex].text;
+		var rankSelector = document.getElementById("rankSelector");
+		var rank = rankSelector.options[rankSelector.selectedIndex].text;		
+		refreshFindByShipSizeAndRank(shipSize, rank);
+	}
 }
 
 function clearDisplay(){
-	var elements = ["userBoxes", "Captain", "Engineer", "Officer"];
+	var elements = ["userBoxes", "Captain", "Engineer", "Officer", "shipAndRankBoxes"]; //TODO this should use a .class
 	for (let i = 0; i < elements.length; i++) {
 		var usersDiv = document.getElementById(elements[i]);
 		while (usersDiv.firstChild) {
