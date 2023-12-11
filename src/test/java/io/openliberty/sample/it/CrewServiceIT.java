@@ -183,6 +183,41 @@ public class CrewServiceIT {
 
     }
 
+    /**
+     * Test findByShipSizeAndRank, currently expects ordering to remain the same, which the spec doesn't require.
+     */
+    @Test
+    public void testFindByShipSizeAndRank() {
+        response = client.target(baseURL + "db/crew/it1").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Engineer\",\"crewID\":75,\"ship\":\"Liberty Saucer\"}"));
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
+        response = client.target(baseURL + "db/crew/it2").request().post(Entity.json("{\"name\":\"Jim\",\"rank\":\"Captain\",\"crewID\":64,\"ship\":\"Liberty Saucer\"}"));
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
+        response = client.target(baseURL + "db/crew/it3").request().post(Entity.json("{\"name\":\"Alex\",\"rank\":\"Engineer\",\"crewID\":15,\"ship\":\"WebSphere Battleship\"}"));
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
+        response = client.target(baseURL + "db/crew/it4").request().post(Entity.json("{\"name\":\"Nathan\",\"rank\":\"Captain\",\"crewID\":30,\"ship\":\"Jakarta Sailboat\"}"));
+        assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
+
+        //Check findByShipSizeAndRank
+        response = client.target(baseURL + "db/crew/shipSize/small/rank/Engineer").request().get();
+        JsonReader reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        JsonArray array = reader.readArray();
+        JsonArray expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Mark").add("CrewID", 75).add("Ship", "Liberty Saucer").build()).build();
+        assertEquals(expectedArray, array); 
+        
+        response = client.target(baseURL + "db/crew/shipSize/large/rank/Engineer").request().get();
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        array = reader.readArray();
+        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Alex").add("CrewID", 15).add("Ship", "WebSphere Battleship").build()).build();
+        assertEquals(expectedArray, array);    
+        
+        response = client.target(baseURL + "db/crew/shipSize/small/rank/Captain").request().get();
+        reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        array = reader.readArray();
+        expectedArray = Json.createArrayBuilder().add(Json.createObjectBuilder().add("Name", "Jim").add("CrewID", 64).add("Ship", "Liberty Saucer").build())
+                                                 .add(Json.createObjectBuilder().add("Name", "Nathan").add("CrewID", 30).add("Ship", "Jakarta Sailboat").build()).build();
+        assertEquals(expectedArray, array);    
+    }
+
 
     private static boolean isPostgresAvailable() {
         return checkHostAndPort("localhost", 5432);
