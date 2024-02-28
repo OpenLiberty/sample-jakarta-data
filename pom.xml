@@ -14,7 +14,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <!-- Plugins -->
-        <version.liberty-maven-plugin>3.10</version.liberty-maven-plugin>
+        <version.liberty-maven-plugin>3.10.1</version.liberty-maven-plugin>
         <!-- OpenLiberty runtime -->
         <version.openliberty-group>io.openliberty.beta</version.openliberty-group>
         <version.openliberty-runtime>23.0.0.12-beta</version.openliberty-runtime>
