@@ -1,4 +1,4 @@
-![](https://github.com/OpenLiberty/open-liberty/blob/master/logos/logo_horizontal_light_navy.png)
+![](https://raw.githubusercontent.com/OpenLiberty/open-liberty/release/logos/logo_horizontal_light_navy.png)
 
 # Jakarta Data Sample
 This sample shows how to store and retrieve data using Jakarta Data. Jakarta Data is planned to release in Jakarta EE 11, and is currently in beta in Open Liberty.
