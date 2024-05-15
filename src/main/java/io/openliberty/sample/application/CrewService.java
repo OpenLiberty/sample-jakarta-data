@@ -90,7 +90,10 @@ public class CrewService {
 
 		PageRequest pageRequest = PageRequest.ofPage(pageNum).size(5);
 
-		Page<CrewMember> page = crewMembers.findByRank(Rank.fromString(rank), pageRequest, Sort.asc("name"), Sort.asc("id"));
+		Page<CrewMember> page = crewMembers.findByRank(Rank.fromString(rank), 
+                                                       pageRequest, 
+                                                       Sort.asc("name"), 
+                                                       Sort.asc("id"));
 
 		return crewMembersToJsonArray(page);
 	}
