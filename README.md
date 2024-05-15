@@ -39,7 +39,7 @@ The **CrewMembers** repository is injected into the REST application using CDI
 
 ```java
 public class CrewService {
-//...
+//[...]
 @Inject
 CrewMembers crewMembers;
 ```
@@ -51,7 +51,6 @@ public String add(CrewMember crewMember) {
     crewMembers.save(crewMember);
 
     //Jakarta Validation[...]
-
 ```
 
 To remove an individual **CrewMember** from the database based on the ID, you can use `crewMembers.deleteByCrewID`
@@ -69,6 +68,7 @@ In the `CrewMembers.java` file we can see that these will be returned sorted alp
 ```java
 public interface CrewMembers {
 //[...]
+@Find
 @OrderBy("name")
 Stream<CrewMember> findAll();
 ```
