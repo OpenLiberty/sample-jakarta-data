@@ -14,7 +14,7 @@ import java.util.List;
 
 import jakarta.data.Sort;
 import jakarta.data.page.Page;
-import jakarta.data.page.Pageable;
+import jakarta.data.page.PageRequest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -88,11 +88,9 @@ public class CrewService {
 	public String retrieveByRank(@PathParam("rank") String rank,
 								 @PathParam("pageNum") long pageNum) {
 
-		Pageable pageRequest = Pageable.ofSize(5)
-									   .page(pageNum)
-									   .sortBy(Sort.asc("name"), Sort.asc("id"));
+		PageRequest pageRequest = PageRequest.ofPage(pageNum).size(5);
 
-		Page<CrewMember> page = crewMembers.findByRank(Rank.fromString(rank), pageRequest);
+		Page<CrewMember> page = crewMembers.findByRank(Rank.fromString(rank), pageRequest, Sort.asc("name"), Sort.asc("id"));
 
 		return crewMembersToJsonArray(page);
 	}

@@ -1,5 +1,6 @@
 <server description="Sample Liberty server">
 	<featureManager>
+        <!-- Using EE10 features until EE11 features are all in beta-->
 		<feature>beanValidation-3.0</feature>	   
 		<feature>passwordUtilities-1.0</feature>
 		<feature>restfulWS-3.1</feature>
