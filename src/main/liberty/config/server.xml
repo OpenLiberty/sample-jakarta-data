@@ -21,16 +21,15 @@
 		<fileset dir="${server.config.dir}/lib/derby" includes="*.jar"/>
 	</library>
 
-	<dataSource id="DefaultDataSource" jndiName="jdbc/postgres">
+	<dataSource id="DefaultDataSource" jndiName="jdbc/datadb">
 
         <jdbcDriver libraryRef="PostgresLib"/>
 		<properties.postgresql databaseName="testdb" serverName="localhost" portNumber="5432" user="sampleUser" password="{aes}APtt+/vYxxPa0jE1rhmZue9wBm3JGqFK3JR4oJdSDGWM1wLr1ckvqkqKjSB2Voty8g=="/>
 
-        <!--
+        <!-- Swap with postgres above to use Derby Embedded
         <jdbcDriver libraryRef="DerbyLib"/>
         <properties.derby.embedded databaseName="memory:testDB" createDatabase="create"/>
         -->
     </dataSource>
 
-    <logging traceSpecification="*=info:com.ibm.ws.jaxrs*=all:org.apache.wink.*=all:org.apache.cxf.*=all:io.openliberty.restfulWS*=all:org.jboss.resteasy*=all" />
 </server>
