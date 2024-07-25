@@ -13,6 +13,7 @@ package io.openliberty.sample.it;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class CrewServiceIT {
     public void setup() {
       client = ClientBuilder.newClient();
       assumeTrue(isPostgresAvailable(), "Postgres is not Available");
-      response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\"}"));
+      response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\",\"ship\":\"Liberty Saucer\"}"));
       assertEquals(200, response.getStatus(), "output: " + response.readEntity(String.class));
       response = client.target(baseURL + "db/crew/").request().delete(); //Delete All before each test
       assertEquals(204, response.getStatus(), "output: " + response.readEntity(String.class)); 
@@ -131,6 +132,7 @@ public class CrewServiceIT {
         response = client.target(baseURL + "db/crew/it").request().post(Entity.json("{\"name\":\"Mark\",\"rank\":\"Captain\",\"crewID\":\"75\",\"ship\":\"Quarkus Speedboat\"}"));
 
         reader = Json.createReader(new StringReader(response.readEntity(String.class)));
+        //fail(reader.toString());
         array = reader.readArray();
         assertEquals(1, array.size(), "Validation array should have only contained 1 message");
         assertEquals("\"Crew member must be assigned to one of the listed ships!\"", array.get(0).toString());    

@@ -12,6 +12,7 @@ package io.openliberty.sample.application;
 
 import java.util.List;
 
+import jakarta.data.Direction;
 import jakarta.data.Sort;
 import jakarta.data.page.Page;
 import jakarta.data.page.PageRequest;
@@ -43,7 +44,7 @@ public class CrewService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON) 
 	public String add(CrewMember crewMember) {
-
+        System.out.println("add");
 		try {
 			crewMembers.save(crewMember);
 		} catch (ConstraintViolationException x) {
@@ -100,6 +101,7 @@ public class CrewService {
 
 	@GET
 	@Path("/shipSize/{shipSize}/rank/{rank}")
+    @Produces(MediaType.APPLICATION_JSON)
 	public String retrieveByShipSizeAndRank(@PathParam("shipSize") Ship.Size size, @PathParam("rank") String rank) {
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		for (CrewMember c : crewMembers.findByShipSizeAndRank(size, Rank.fromString(rank))) {	
@@ -110,6 +112,16 @@ public class CrewService {
 			jab.add(json);
 		}
 		return jab.build().toString();
+	}
+
+    @GET
+    @Path("/sortProperty/{property}/sortDirection/{direction}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String retrieveSorted(@PathParam("property") String property, @PathParam("direction") Direction direction) {
+
+        Iterable<CrewMember> crewMembersIterable = crewMembers.sorted(Sort.of(property, direction, true))::iterator;
+		
+		return crewMembersToJsonArray(crewMembersIterable);
 	}
 
 	@DELETE

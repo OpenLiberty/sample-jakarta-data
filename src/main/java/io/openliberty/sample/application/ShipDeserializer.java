@@ -10,6 +10,7 @@ public class ShipDeserializer implements JsonbDeserializer<Ship> {
 
     @Override
     public Ship deserialize(JsonParser parser, DeserializationContext ctx, Type rtType) {
+        System.out.println("deserialize");
         String shipName = parser.getString();
         if (shipName.equals("Liberty Saucer")) {
             return new Ship(shipName, Ship.Size.small);
@@ -18,6 +19,7 @@ public class ShipDeserializer implements JsonbDeserializer<Ship> {
         } else if (shipName.equals("WebSphere Battleship")) {
             return new Ship(shipName, Ship.Size.large);
         } else {
+            System.out.println("deserialize - null");
             return null;
         }
 
