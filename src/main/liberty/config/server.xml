@@ -1,13 +1,12 @@
 <server description="Sample Liberty server">
 	<featureManager>
-        <!-- Using EE10 features until EE11 features are all in beta-->
-		<feature>beanValidation-3.0</feature>	   
+		<feature>beanValidation-3.1</feature> <!-- Update to validation-3.1 when in beta -->	   
 		<feature>passwordUtilities-1.0</feature>
-		<feature>restfulWS-3.1</feature>
-		<feature>cdi-4.0</feature>
+		<feature>restfulWS-4.0</feature>
+		<feature>cdi-4.1</feature>
 		<feature>jsonb-3.0</feature>
 		<feature>data-1.0</feature>
-		<feature>persistence-3.1</feature>
+		<feature>persistence-3.2</feature>
 	</featureManager>
 	
 	<httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint"/>
@@ -18,9 +17,19 @@
 		<fileset dir="${server.config.dir}/lib/postgres" includes="*.jar"/>
 	</library>
 
-	<dataSource id="DefaultDataSource" jndiName="jdbc/postgres">
-		<jdbcDriver libraryRef="PostgresLib"/>
+    <library id="DerbyLib">
+		<fileset dir="${server.config.dir}/lib/derby" includes="*.jar"/>
+	</library>
+
+	<dataSource id="DefaultDataSource" jndiName="jdbc/datadb">
+
+        <jdbcDriver libraryRef="PostgresLib"/>
 		<properties.postgresql databaseName="testdb" serverName="localhost" portNumber="5432" user="sampleUser" password="{aes}APtt+/vYxxPa0jE1rhmZue9wBm3JGqFK3JR4oJdSDGWM1wLr1ckvqkqKjSB2Voty8g=="/>
-	</dataSource>
+
+        <!-- Swap with postgres above to use Derby Embedded
+        <jdbcDriver libraryRef="DerbyLib"/>
+        <properties.derby.embedded databaseName="memory:testDB" createDatabase="create"/>
+        -->
+    </dataSource>
 
 </server>

@@ -36,11 +36,12 @@ public interface CrewMembers extends DataRepository<CrewMember, Integer> {
     List<CrewMember> findByShipSizeAndRank(Ship.Size size, Rank rank);
 
     @Find
+    List<CrewMember> sorted(Sort<?>... sorts);
+
     @OrderBy("name")
     Stream<CrewMember> findAll();
 
     void deleteByCrewID(int crewID);
 
-    @Delete
     void deleteAll();
 }
