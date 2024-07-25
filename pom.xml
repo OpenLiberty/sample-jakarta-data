@@ -17,7 +17,7 @@
         <version.liberty-maven-plugin>3.10.3</version.liberty-maven-plugin>
         <!-- OpenLiberty runtime -->
         <version.openliberty-group>io.openliberty.beta</version.openliberty-group>
-        <version.openliberty-runtime>24.0.0.5-beta</version.openliberty-runtime>
+        <version.openliberty-runtime>24.0.0.8-beta</version.openliberty-runtime>
         <http.port>9080</http.port>
         <https.port>9443</https.port>
         <liberty.var.app.context.root>/</liberty.var.app.context.root>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>jakarta.data</groupId>
             <artifactId>jakarta.data-api</artifactId>
-            <version>1.0.0-RC1</version>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -122,6 +122,15 @@
                                 <groupId>org.postgresql</groupId>
                                 <artifactId>postgresql</artifactId>
                                 <version>42.6.0</version>
+                            </dependency>
+                        </dependencyGroup>
+                        <dependencyGroup>
+                            <!-- Relative to server config directory -->
+                            <location>lib/derby</location>
+                            <dependency>
+                                <groupId>org.apache.derby</groupId>
+                                <artifactId>derby</artifactId>
+                                <version>10.14.1.0</version>
                             </dependency>
                         </dependencyGroup>
                     </copyDependencies>
