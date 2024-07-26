@@ -44,7 +44,6 @@ public class CrewService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON) 
 	public String add(CrewMember crewMember) {
-        System.out.println("add");
 		try {
 			crewMembers.save(crewMember);
 		} catch (ConstraintViolationException x) {
