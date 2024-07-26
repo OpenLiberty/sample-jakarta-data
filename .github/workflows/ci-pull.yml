@@ -8,6 +8,9 @@ on:
     branches: [ "main" ]
   push:
     branches: [ "actions"]
+  schedule:
+    - cron: "0 12 * * 1-5"
+    
 
 permissions:
   contents: read
