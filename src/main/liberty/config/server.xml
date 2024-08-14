@@ -1,6 +1,6 @@
 <server description="Sample Liberty server">
 	<featureManager>
-		<feature>beanValidation-3.1</feature> <!-- Update to validation-3.1 when in beta -->	   
+		<feature>validation-3.1</feature> 
 		<feature>passwordUtilities-1.0</feature>
 		<feature>restfulWS-4.0</feature>
 		<feature>cdi-4.1</feature>
