@@ -1,4 +1,4 @@
-FROM postgres:17.0
+FROM postgres:17.1
 
 ENV POSTGRES_USER=sampleUser
 ENV POSTGRES_PASSWORD=openliberty
