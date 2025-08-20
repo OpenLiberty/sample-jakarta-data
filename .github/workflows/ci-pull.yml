@@ -21,7 +21,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:17.5
+        image: postgres:17.6
         env:
           POSTGRES_USER: sampleUser
           POSTGRES_PASSWORD: openliberty
