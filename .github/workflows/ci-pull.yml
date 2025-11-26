@@ -61,7 +61,7 @@ jobs:
       run: mvn -B failsafe:verify
     - name: Archive Liberty logs
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: liberty-logs
         path: target/liberty/wlp/usr/servers/JakartaDataServer/logs/
