@@ -127,11 +127,11 @@
                         </dependencyGroup>
                         <dependencyGroup>
                             <!-- Relative to server config directory -->
-                            <location>lib/derby</location>
+                            <location>lib/h2</location>
                             <dependency>
-                                <groupId>org.apache.derby</groupId>
-                                <artifactId>derby</artifactId>
-                                <version>10.14.1.0</version>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>2.5.252</version>
                             </dependency>
                         </dependencyGroup>
                     </copyDependencies>

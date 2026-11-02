@@ -17,8 +17,8 @@
 		<fileset dir="${server.config.dir}/lib/postgres" includes="*.jar"/>
 	</library>
 
-    <library id="DerbyLib">
-		<fileset dir="${server.config.dir}/lib/derby" includes="*.jar"/>
+    <library id="H2Lib">
+		<fileset dir="${server.config.dir}/lib/h2" includes="*.jar"/>
 	</library>
 
 	<dataSource id="DefaultDataSource" jndiName="jdbc/datadb">
@@ -26,9 +26,9 @@
         <jdbcDriver libraryRef="PostgresLib"/>
 		<properties.postgresql databaseName="testdb" serverName="localhost" portNumber="5432" user="sampleUser" password="{aes}APtt+/vYxxPa0jE1rhmZue9wBm3JGqFK3JR4oJdSDGWM1wLr1ckvqkqKjSB2Voty8g=="/>
 
-        <!-- Swap with postgres above to use Derby Embedded
-        <jdbcDriver libraryRef="DerbyLib"/>
-        <properties.derby.embedded databaseName="memory:testDB" createDatabase="create"/>
+        <!-- Swap with postgres above to use H2 Embedded
+        <jdbcDriver libraryRef="H2Lib"/>
+        <properties.h2 URL="jdbc:h2:mem:testDB;DB_CLOSE_DELAY=-1"/>
         -->
     </dataSource>
 

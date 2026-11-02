@@ -18,6 +18,9 @@ docker run --name liberty_postgres -d -p 5432:5432 liberty_postgres
 ```
 If you are not using Docker, you will need to create a user with the name `sampleUser` and password `openliberty` with access to a database named `testdb`
 
+#### Alternative: embedded H2
+To run without PostgreSQL, use the embedded in-memory H2 database instead. In [server.xml](src/main/liberty/config/server.xml), comment out the PostgreSQL `jdbcDriver` and `properties.postgresql` lines and uncomment the H2 `jdbcDriver` and `properties.h2` lines.
+
 ## Running the Sample
 From inside the `sample-jakarta-data` directory, build and start the application in Open Liberty with the following command:
 ```
